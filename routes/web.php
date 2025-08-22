@@ -62,6 +62,10 @@ Route::get('/load-reel', function () {
     return view('sections.reel', compact('reels'));
 });
 
+Route::get('/load-about-slider', function () {
+    return view('sections.about-slider');
+});
+
 Route::post('/contactsFind', [EventController::class, 'contactsFind'])->name('contactsFind');
 Route::get('/booking', [EventController::class, 'bookingPage']);
 Route::get('/booking-form', [EventController::class, 'create']);

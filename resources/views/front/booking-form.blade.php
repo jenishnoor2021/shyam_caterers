@@ -191,6 +191,8 @@
   });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
   let index = 1;
   const functionOptions = @json($functions);
@@ -220,11 +222,29 @@
   }
 
   function removeFunctionRow(button) {
-    const confirmDelete = confirm("Are you sure you want to remove this function?");
-    if (confirmDelete) {
-      button.closest('tr').remove();
-      toggleRemoveButtons();
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to remove this function?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, remove it!',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+      backdrop: true,
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        button.closest('tr').remove();
+        toggleRemoveButtons();
+        Swal.fire(
+          'Removed!',
+          'The function has been removed.',
+          'success'
+        )
+      }
+    });
   }
 
   function toggleRemoveButtons() {

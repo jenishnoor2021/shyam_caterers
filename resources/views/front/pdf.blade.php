@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Functio;
+use App\Models\EventType;
 ?>
 
 <!DOCTYPE html>
@@ -88,8 +89,27 @@ use App\Models\Functio;
         }
 
         .section-grid:nth-child(1),
-        .section-grid:nth-child(2) {
+        .section-grid:nth-child(2),
+        .section-grid:nth-child(3),
+        .section-grid:nth-child(4),
+        .section-grid:nth-child(5),
+        .section-grid:nth-child(6),
+        .section-grid:nth-child(7),
+        .section-grid:nth-child(8),
+        .section-grid:nth-child(9),
+        .section-grid:nth-child(10),
+        .section-grid:nth-child(11),
+        .section-grid:nth-child(12),
+        .section-grid:nth-child(13),
+        .section-grid:nth-child(14),
+        .section-grid:nth-child(15),
+        .section-grid:nth-child(16),
+        .section-grid:nth-child(17),
+        .section-grid:nth-child(18),
+        .section-grid:nth-child(19),
+        .section-grid:nth-child(20) {
             top: 50px;
+            min-height: 320px;
         }
 
         /* .section-grid:nth-child(3) {
@@ -143,7 +163,10 @@ use App\Models\Functio;
 
             <!-- Exact Booking Info Box (with underlines like the image) -->
             <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 10px;">
-                {{ $booking->event_type }}
+                @php $getEventType = EventType::where('id', $booking->event_type)->first();
+                $name = $getEventType->event_name;
+                @endphp
+                {{ $name }}
             </div>
 
             <div style="border: 2px solid #000; padding: 10px; margin: 15px 0; font-size: 12px;">

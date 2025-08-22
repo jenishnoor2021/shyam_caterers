@@ -1,5 +1,46 @@
 @extends('layouts.front')
 
+@section('page_style')
+<style>
+    #single-image-slider .owl-nav {
+        position: absolute;
+        top: 40%;
+        transform: translateY(-50%);
+        width: 100%;
+    }
+
+    #single-image-slider .owl-nav .owl-prev {
+        left: 20px;
+        position: absolute;
+    }
+
+    #single-image-slider .owl-nav .owl-next {
+        right: 20px;
+        position: absolute;
+    }
+
+    #single-image-slider .owl-dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px 0;
+    }
+
+    #single-image-slider .owl-dots .owl-dot {
+        height: 12px;
+        width: 12px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        padding: 20px 0;
+    }
+
+    #single-image-slider .owl-dots .owl-dot.active {
+        background: #fff;
+    }
+</style>
+@endsection
+
 @section('content')
 
 @php
@@ -209,9 +250,9 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
             <!--Col-->
             <div class="image-col col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="inner wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="0ms">
-                    <div class="image-layer2" style="background-image: url({{ asset('front_assets/images/resource/lalit-sir.jpeg') }})"></div>
+                    <div class="image-layer2" style="background-image: url({{ asset('front_assets/images/resource/founder-1.jpeg') }})"></div>
                     <div class="image">
-                        <img src="{{asset('front_assets/images/resource/lalit-sir.jpeg')}}" alt="" loading="lazy" class="">
+                        <img src="{{asset('front_assets/images/resource/founder-1.jpeg')}}" alt="" loading="lazy" class="">
                     </div>
                 </div>
             </div>
@@ -222,9 +263,9 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
             <!--Col-->
             <div class="image-col col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="inner wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="0ms">
-                    <div class="image-layer2" style="background-image: url({{ asset('front_assets/images/resource/lalit-sir.jpeg') }})"></div>
+                    <div class="image-layer2" style="background-image: url({{ asset('front_assets/images/resource/founder-2.jpeg') }})"></div>
                     <div class="image">
-                        <img src="{{asset('front_assets/images/resource/lalit-sir.jpeg')}}" alt="" loading="lazy" class="">
+                        <img src="{{asset('front_assets/images/resource/founder-2.jpeg')}}" alt="" loading="lazy" class="">
                     </div>
                 </div>
             </div>
@@ -288,9 +329,9 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
             <!--Col-->
             <div class="image-col col-xl-6 col-lg-6 col-md-12 col-sm-12">
                 <div class="inner wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="0ms">
-                    <div class="image-layer2" style="background-image: url({{ asset('front_assets/images/resource/lalit-sir.jpeg') }})"></div>
+                    <div class="image-layer2" style="background-image: url({{ asset('front_assets/images/resource/founder-3.jpeg') }})"></div>
                     <div class="image">
-                        <img src="{{asset('front_assets/images/resource/lalit-sir.jpeg')}}" alt="" loading="lazy" class="">
+                        <img src="{{asset('front_assets/images/resource/founder-3.jpeg')}}" alt="" loading="lazy" class="">
                     </div>
                 </div>
             </div>
@@ -455,8 +496,8 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
     </div>
 </section>
 
-<!--Gallery Section-->
-<div id="gallery-content">
+<!-- About Slider Section-->
+<div id="single-image-slider">
 </div>
 
 @endsection
@@ -465,15 +506,22 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script>
     window.addEventListener('load', function() {
-        fetch('/load-gallery')
+
+        fetch('/load-about-slider')
             .then(response => response.text())
             .then(html => {
-                document.getElementById('gallery-content').innerHTML = html;
+                document.getElementById('single-image-slider').innerHTML = html;
 
-                $(".gallery-carousel").owlCarousel({
+                $(".single-img--carousel").owlCarousel({
                     items: 3,
                     loop: true,
                     margin: 10,
+                    autoplay: true,
+                    navText: [
+                        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>`,
+                        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`
+                    ],
+                    dots: true,
                     autoplay: true,
                     autoplayTimeout: 3000,
                     autoplayHoverPause: true,

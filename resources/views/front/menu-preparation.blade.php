@@ -231,59 +231,87 @@ use Illuminate\Support\Facades\File;
   const activeCategory = {};
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
   function attachRemoveEvents() {
     document.querySelectorAll('.remove-item').forEach(button => {
       button.onclick = function() {
 
-        const confirmed = confirm("Are you sure you want to remove this item?");
-        if (!confirmed) return;
+        // const confirmed = confirm("Are you sure you want to remove this item?");
+        // if (!confirmed) return;
 
-        const li = this.closest('li');
-        const itemId = this.dataset.id;
-        const func = this.dataset.functionId;
-        const personValue = this.dataset.person;
-        const datetimeValue = this.dataset.datetime;
-        const tab = this.dataset.tab;
-        const csrfToken = document.querySelector('input[name="_token"]').value;
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "Do you want to remove this item?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, remove it!',
+          cancelButtonText: 'Cancel',
+          reverseButtons: true,
+          backdrop: true,
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.isConfirmed) {
 
-        fetch("{{ route('menu.removeItem') }}", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              'X-CSRF-TOKEN': csrfToken
-            },
-            body: JSON.stringify({
-              booking_id: bookingId,
-              function_id: func,
-              person: personValue,
-              datetime: datetimeValue,
-              item_id: itemId
-            })
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              const categoryGroup = li.closest('.category-group');
-              const ul = categoryGroup ? categoryGroup.querySelector('ul') : null;
+            const li = this.closest('li');
+            const itemId = this.dataset.id;
+            const func = this.dataset.functionId;
+            const personValue = this.dataset.person;
+            const datetimeValue = this.dataset.datetime;
+            const tab = this.dataset.tab;
+            const csrfToken = document.querySelector('input[name="_token"]').value;
 
-              // Remove the list item
-              li.remove();
+            fetch("{{ route('menu.removeItem') }}", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                  booking_id: bookingId,
+                  function_id: func,
+                  person: personValue,
+                  datetime: datetimeValue,
+                  item_id: itemId
+                })
+              })
+              .then(res => res.json())
+              .then(data => {
+                if (data.success) {
+                  const categoryGroup = li.closest('.category-group');
+                  const ul = categoryGroup ? categoryGroup.querySelector('ul') : null;
 
-              if (ul && ul.children.length === 0 && categoryGroup) {
-                categoryGroup.remove();
-              }
+                  // Remove the list item
+                  li.remove();
 
-              if (selectedItems[func]) {
-                selectedItems[func] = selectedItems[func].filter(item => item
-                  .item_id !== parseInt(itemId));
-              }
+                  if (ul && ul.children.length === 0 && categoryGroup) {
+                    categoryGroup.remove();
+                  }
 
-              updateTotalCount(tab, 'minus');
+                  if (selectedItems[func]) {
+                    selectedItems[func] = selectedItems[func].filter(item => item
+                      .item_id !== parseInt(itemId));
+                  }
 
-              showAddButton(itemId, func, tab);
-            }
-          });
+                  updateTotalCount(tab, 'minus');
+
+                  showAddButton(itemId, func, tab);
+                }
+              });
+
+            Swal.fire(
+              'Removed!',
+              'The item has been removed.',
+              'success'
+            )
+          } else {
+            return;
+          }
+        });
+
       };
     });
   }

@@ -70,17 +70,26 @@
                     <div class="row mb-3">
                         <div class="col-md-6 label-block">
                             <label class="form-label">Event Type <span class="text-danger">*</span></label>
-                            <select name="event" class="form-select" required>
+                            <select name="event" class="form-select" id="eventSelect" required>
                                 <option value="">-- Select Event --</option>
                                 @foreach($events as $event)
                                 <option value="{{ $event->event_name }}">{{ $event->event_name }}</option>
                                 @endforeach
+                                <option value="other">Other</option>
                             </select>
                         </div>
 
                         <div class="col-md-6 label-block">
                             <label class="form-label">Event Date <span class="text-danger">*</span></label>
                             <input name="event_date" id="event_date" class="form-control datetimepicker flatpickr-input" value="{{old('event_date')}}" placeholder="Enter event Date" required>
+                        </div>
+                    </div>
+
+                    <!-- {{-- Hidden input for custom event --}} -->
+                    <div class="row mb-3 d-none" id="otherEventRow">
+                        <div class="col-md-12 label-block">
+                            <label class="form-label">Enter Event <span class="text-danger">*</span></label>
+                            <input type="text" name="other_event" id="otherEventInput" class="form-control">
                         </div>
                     </div>
 
@@ -98,8 +107,8 @@
 
                     <div class="row mb-3">
                         <div class="col-md-12 label-block">
-                            <label class="form-label">Message <span class="text-danger">*</span></label>
-                            <textarea name="message" row="3" class="form-control" placeholder="Enter event venue" required>{{old('message')}}</textarea>
+                            <label class="form-label">Message </label>
+                            <textarea name="message" row="3" class="form-control" placeholder="Enter event venue">{{old('message')}}</textarea>
                         </div>
                     </div>
 
@@ -169,15 +178,28 @@
 <script>
     function initializeDateTimePickers() {
         flatpickr(".datetimepicker", {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
+            enableTime: false,
+            dateFormat: "Y-m-d",
             altInput: true,
-            altFormat: "F j, Y h:i K",
+            altFormat: "F j, Y",
             allowInput: true
         });
     }
 
     // Initial run for already-rendered input
     initializeDateTimePickers();
+</script>
+
+<script>
+    document.getElementById('eventSelect').addEventListener('change', function() {
+        let otherRow = document.getElementById('otherEventRow');
+        if (this.value === 'other') {
+            otherRow.classList.remove('d-none');
+            document.getElementById('otherEventInput').setAttribute('required', true);
+        } else {
+            otherRow.classList.add('d-none');
+            document.getElementById('otherEventInput').removeAttribute('required');
+        }
+    });
 </script>
 @endsection

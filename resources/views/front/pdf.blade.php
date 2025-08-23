@@ -188,33 +188,33 @@ use App\Models\EventType;
                             </span>
                         </td>
                         <td style="padding: 2px;">
-                            <span style="color: #0033CC;"><strong>Order No:</strong></span>
+                            <!-- <span style="color: #0033CC;"><strong>Order No:</strong></span>
                             <span style="display: inline-block; border-bottom: 1px solid #000; width: 70%;">
                                 206
-                            </span>
+                            </span> -->
                         </td>
                     </tr>
                     <tr style="padding: 8px;">
-                        <td style="padding: 2px; width: 32%;">
+                        <td style="padding: 2px; width: 47%;">
                             <span style="color: #0033CC;"><strong>Venue:</strong></span>
-                            <span style="display: inline-block; border-bottom: 1px solid #000; width: 80%;">
+                            <span style="display: inline-block; border-bottom: 1px solid #000; width: 85%;">
                                 {{ $booking->venue }}
                             </span>
                         </td>
-                        <td style="padding: 2px; width: 32%;">
+                        <td style="padding: 2px; width: 21%;">
                             <span style="color: #0033CC;"><strong>Mobile:</strong></span>
-                            <span style="display: inline-block; border-bottom: 1px solid #000; width: 75%;">
+                            <span style="display: inline-block; border-bottom: 1px solid #000; width: 55%;">
                                 {{ $booking->phone_no }}
                             </span>
                         </td>
                         <td style="padding: 2px; width: 33%;">
-                            <span style="color: #0033CC;"><strong>Booking:</strong></span>
-                            <span style="display: inline-block; border-bottom: 1px solid #000; width: 70%;">
-                                {{ $booking->event_date }}
+                            <span style="color: #0033CC;"><strong>Inquiry date :</strong></span>
+                            <span style="display: inline-block; border-bottom: 1px solid #000; width: 65%;">
+                                {{ now()->format('d-m-Y H:i') }}
                             </span>
                         </td>
                     </tr>
-                    <tr style="padding: 8px;">
+                    <!-- <tr style="padding: 8px;">
                         <td colspan="2" style="padding: 4px;">
                             <span style="color: #0033CC;"><strong>Meal Type:</strong></span>
                             <span style="display: inline-block; border-bottom: 1px solid #000; width: 84%;">
@@ -222,7 +222,7 @@ use App\Models\EventType;
                             </span>
                         </td>
                         <td></td>
-                    </tr>
+                    </tr> -->
                 </table>
             </div>
 

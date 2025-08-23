@@ -116,7 +116,7 @@
     <!--Scroll to top-->
     <div class="scroll-to-top scroll-to-target" data-target="html"><span class="icon fa fa-angle-up"></span></div>
 
-    <a href="https://wa.me/+919825141008" target="_blank" id="whatsapp_icon">
+    <a href="https://wa.me/+91{{ $surat_contact }}" target="_blank" id="whatsapp_icon">
         <img src="{{asset('front_assets/images/whatsapp.png')}}" alt="whatsapp-img">
     </a>
 

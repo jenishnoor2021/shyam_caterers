@@ -46,7 +46,7 @@
 }
 
 .fixed-header.header-down, .fixed-header.header-up {
-  top: 0;
+  top: 0 !important;
 }
 
 .fixed-header.header-down .main-box .logo-box {
@@ -5932,8 +5932,8 @@ margin-bottom: var(--margin-bottom-40);
   position: relative;
   background-color: var(--color-four);
   background-size: cover;
-  height: 100vh;
-  margin-bottom: 60px;
+  height: 100%;
+  margin-bottom: 0;
 
 }
 
@@ -5942,8 +5942,8 @@ margin-bottom: var(--margin-bottom-40);
     position: relative;
     background-color: var(--color-four);
     background-size: cover;
-    height: 100vh;
-    margin-bottom: 290px;
+    height: 100%;
+    margin-bottom: 0;
   }
 }
 
@@ -6240,7 +6240,7 @@ margin-bottom: var(--margin-bottom-40);
 
 @media only screen and (max-width: 767px) {
   .fluid-section7 .image-col .image {
-    position: absolute;
+    position: unset;
    
     display: block;
     
@@ -6392,7 +6392,7 @@ margin-bottom: var(--margin-bottom-40);
   .fluid-section7 .content-col .inner {
     position: relative;
     display: block;
-    padding-top: var(--padding-top-230);
+    padding-top: 0;
     
     padding-left: var(--padding-left-0);
     padding-right: 0;
@@ -6446,7 +6446,7 @@ margin-bottom: var(--margin-bottom-40);
 }
 
 .fluid-section7 .content-col .title-box {
-  margin-bottom: -70px;
+  margin-bottom: 0;
   margin-top: 50px;
 }
 
@@ -6502,7 +6502,8 @@ margin-bottom: var(--margin-bottom-40);
 
 
 .fluid-section.alternate .row {
-  
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .fluid-section9 .alternate .content-col .link-box {
@@ -6809,7 +6810,7 @@ margin-bottom: var(--margin-bottom-40);
 
 .services-section .image-col {
   position: relative;
-  margin-bottom: var(--margin-bottom-90);
+  margin-bottom: 0;
   order: 5;
 }
 
@@ -6818,7 +6819,7 @@ margin-bottom: var(--margin-bottom-40);
   display: flex;
   padding-top: var(--padding-top-20);
   text-align: center;
-  height: 60vh;
+  height: 100%;
   
 }
 
@@ -9715,4 +9716,9 @@ border-radius: 0;
     .fluid-section9 .content-col .inner .fluid-section-paragraph {
         padding-top: 0;
     }
+}
+
+
+.services-section .row {
+  align-items: center;
 }

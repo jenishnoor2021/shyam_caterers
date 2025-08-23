@@ -46,7 +46,7 @@
         <form action="{{ route('booking.submit') }}" id="newBookingForm" method="POST">
           @csrf
           <div class="row mb-3">
-            <div class="col-md-4 label-block">
+            <div class="col-md-6 label-block">
               <label class="form-label">Customer Name <span class="text-danger">*</span></label>
               <input type="text" name="customer_name" class="form-control" placeholder="Enter name" required
                 @if($errors->has('customer_name'))
@@ -54,24 +54,24 @@
               @endif>
             </div>
 
-            <div class="col-md-4 label-block">
+            <div class="col-md-6 label-block">
               <label class="form-label">Contact Number <span class="text-danger">*</span></label>
               <input type="number" name="phone_no" id="phone_no" class="form-control" placeholder="Enter mobile number" oninput="this.value = this.value.slice(0, 10);" required>
               @if($errors->has('phone_no'))
               <div class="error text-danger">{{ $errors->first('phone_no') }}</div>
               @endif
             </div>
+          </div>
 
-            <div class="col-md-4 label-block">
+          <div class="row mb-3">
+            <div class="col-md-6 label-block">
               <label class="form-label">Email<span class="text-danger">*</span></label>
               <input type="email" name="email" id="email" class="form-control" placeholder="Enter email" required>
               @if($errors->has('email'))
               <div class="error text-danger">{{ $errors->first('email') }}</div>
               @endif
             </div>
-          </div>
 
-          <div class="row mb-3">
             <div class="col-md-6 label-block">
               <label class="form-label">Event Type <span class="text-danger">*</span></label>
               <select name="event_type" class="form-select" required>
@@ -85,13 +85,13 @@
               @endif
             </div>
 
-            <div class="col-md-6 label-block">
+            <!-- <div class="col-md-6 label-block">
               <label class="form-label">Event Date <span class="text-danger">*</span></label>
               <input type="text" name="event_date" id="event_date" class="form-control datetimepicker input" placeholder="Enter event Date" required>
               @if($errors->has('event_date'))
               <div class="error text-danger">{{ $errors->first('event_date') }}</div>
               @endif
-            </div>
+            </div> -->
           </div>
 
           <div class="row mb-3">
@@ -198,6 +198,32 @@
   const functionOptions = @json($functions);
 
   function addFunctionRow() {
+    const rows = document.querySelectorAll("#functionRows tr");
+    const lastRow = rows[rows.length - 1];
+
+    // Validate required fields in the last row
+    const selects = lastRow.querySelectorAll("select[required]");
+    const inputs = lastRow.querySelectorAll("input[required]");
+    let isValid = true;
+
+    [...selects, ...inputs].forEach(input => {
+      if (!input.value.trim()) {
+        isValid = false;
+      }
+    });
+
+    if (!isValid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'All fields are required',
+        text: 'Please fill in all fields before adding a new function.',
+      });
+      return;
+    }
+
+    // Get datetime value from last row to copy into new row
+    const lastDateTime = lastRow.querySelector("input[name*='[datetime]']").value;
+
     const row = document.createElement('tr');
 
     let functionSelect = '<select name="functions[' + index + '][fun_id]" class="form-select" required>';
@@ -210,7 +236,7 @@
     row.innerHTML = `
             <td>${functionSelect}</td>
             <td><input type="number" name="functions[${index}][person]" class="form-control" placeholder="Enter person" required></td>
-            <td><input type="text" name="functions[${index}][datetime]" class="form-control datetimepicker" placeholder="Enter date time" required></td>
+            <td><input type="text" name="functions[${index}][datetime]" class="form-control datetimepicker" placeholder="Enter date time" value="${lastDateTime}" required></td>
             <td class="action">
                 <button type="button" class="btn btn-sm btn-danger" onclick="removeFunctionRow(this)"><i class="fa fa-trash"></i></button>
             </td>
@@ -271,7 +297,8 @@
       enableTime: true,
       dateFormat: "Y-m-d H:i",
       altInput: true,
-      altFormat: "F j, Y h:i K",
+      // altFormat: "F j, Y h:i K",
+      altFormat: "Y-m-d H:i K",
       allowInput: true
     });
   }

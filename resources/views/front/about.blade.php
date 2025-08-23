@@ -117,17 +117,17 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                     <div class="inner clearfix">
                         <div class="fact-count1">
                             <div class="count-box">
-                                <span class="count-text" data-stop="150" data-speed="2000">0</span><i>+</i>
+                                <span class="count-text" data-stop="350" data-speed="2000">0</span><i>+</i>
                             </div>
                         </div>
-                        <div class="fact-title">daily order</div>
+                        <div class="fact-title">Yearly order</div>
                     </div>
                 </div>
                 <div class="fact-block col-lg-3 col-md-6 col-sm-12">
                     <div class="inner clearfix">
                         <div class="fact-count">
                             <div class="count-box">
-                                <span class="count-text" data-stop="82" data-speed="1500">0</span><i>+</i>
+                                <span class="count-text" data-stop="100" data-speed="1500">0</span><i>+</i>
                             </div>
                         </div>
                         <div class="fact-title">Special Dishes</div>
@@ -147,7 +147,7 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                     <div class="inner clearfix">
                         <div class="fact-count">
                             <div class="count-box">
-                                <span class="count-text" data-stop="10" data-speed="1000">0</span><i>+</i>
+                                <span class="count-text" data-stop="30" data-speed="1000">0</span><i>+</i>
                             </div>
                         </div>
                         <div class="fact-title">awards won</div>
@@ -230,11 +230,9 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                             <div class="pattern-image1" style="margin: 0 auto;">
                                 <img src="{{asset('front_assets/images/icons/separator.svg')}}" alt="" title="" loading="lazy">
                             </div>
-                            <h3 class="founder-name" style="margin: 0;margin-top:10px;">Admin</h3>
+                            <h3 class="founder-name" style="margin: 0;margin-top:10px;">Arjanbhai Shingala</h3>
                             <div class="text">
-                                <div class="text1">Mr. Lalit Jain, founder of Jain Caterers, believes that true hospitality is about creating meaningful experiences and fostering connections, not just serving food. With a commitment to authenticity, integrity, and excellence, he ensures every event reflects high standards of care and attention to detail, making Jain Caterers a trusted name in the industry. <br>
-
-                                    Jain Caterers stands out by blending tradition with innovation, offering event experiences that honor cultural roots while meeting modern expectations. Under Mr. Jain’s leadership, Jain Caterers creates warm, inviting atmospheres for guests. He plans to expand internationally, staying true to the brand's core values of quality, purity, and excellence.
+                                <div class="text1">Since 1988, Shyam Caterers, under the visionary leadership of its founder Shri Arjanbhai Shingala, has set a benchmark in the catering industry with its commitment to quality, taste, and exceptional service. With more than three branches across India and decades of experience, Arjanbhai has transformed Shyam Caterers into a trusted name for weddings, corporate events, and grand celebrations. His philosophy of blending traditional flavors with modern presentation has won the hearts of countless clients. Known for his dedication, professionalism, and personal involvement in every event, Arjanbhai ensures that every occasion is not just managed but celebrated with perfection. Today, Shyam Caterers stands as a symbol of trust, hospitality, and memorable experiences – all thanks to the vision and hard work of its founder.
                                 </div>
 
 
@@ -276,15 +274,13 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                     <div class="content-box">
                         <div class="title-box centered">
 
-                            <h1 class="founder-heading">Founder</h1>
-                            <div class="pattern-image1" style="margin: 0 auto;">
+                            <!-- <h1 class="founder-heading">Founder</h1> -->
+                            <!-- <div class="pattern-image1" style="margin: 0 auto;">
                                 <img src="{{asset('front_assets/images/icons/separator.svg')}}" alt="" title="" loading="lazy">
-                            </div>
-                            <h3 class="founder-name" style="margin: 0;margin-top:10px;">Admin</h3>
+                            </div> -->
+                            <h3 class="founder-name" style="margin: 0;">Akshay A. Shingala</h3>
                             <div class="text">
-                                <div class="text1">Mr. Lalit Jain, founder of Jain Caterers, believes that true hospitality is about creating meaningful experiences and fostering connections, not just serving food. With a commitment to authenticity, integrity, and excellence, he ensures every event reflects high standards of care and attention to detail, making Jain Caterers a trusted name in the industry. <br>
-
-                                    Jain Caterers stands out by blending tradition with innovation, offering event experiences that honor cultural roots while meeting modern expectations. Under Mr. Jain’s leadership, Jain Caterers creates warm, inviting atmospheres for guests. He plans to expand internationally, staying true to the brand's core values of quality, purity, and excellence.
+                                <div class="text1">Mr. Akshay Shingala, son of the visionary founder Shri Arjanbhai Shingala, has successfully expanded Shyam Caterers across Gujarat, making it one of the most recognized and trusted names in the catering industry. With branches and services reaching major cities such as Ahmedabad, Surat, Rajkot, Vadodara, and beyond, Shyam Caterers has become synonymous with authentic taste, premium quality, and impeccable hospitality.<br /> Since its establishment in 1988, the brand has built a strong reputation for weddings, corporate events, and grand celebrations. While Shri Arjanbhai laid the foundation with his dedication and values, Akshay Shingala has infused modern ideas, innovative presentation, and large-scale event expertise—ensuring Shyam Caterers remains the most popular choice for catering across Gujarat. Today, together they continue to carry forward a legacy of trust, excellence, and unforgettable experiences.
                                 </div>
 
 
@@ -306,15 +302,13 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                     <div class="content-box">
                         <div class="title-box centered">
 
-                            <h1 class="founder-heading">Founder</h1>
-                            <div class="pattern-image1" style="margin: 0 auto;">
+                            <!-- <h1 class="founder-heading">Founder</h1> -->
+                            <!-- <div class="pattern-image1" style="margin: 0 auto;">
                                 <img src="{{asset('front_assets/images/icons/separator.svg')}}" alt="" title="" loading="lazy">
-                            </div>
-                            <h3 class="founder-name" style="margin: 0;margin-top:10px;">Admin</h3>
+                            </div> -->
+                            <h3 class="founder-name" style="margin: 0;">Jayendra A. Shingala</h3>
                             <div class="text">
-                                <div class="text1">Mr. Lalit Jain, founder of Jain Caterers, believes that true hospitality is about creating meaningful experiences and fostering connections, not just serving food. With a commitment to authenticity, integrity, and excellence, he ensures every event reflects high standards of care and attention to detail, making Jain Caterers a trusted name in the industry. <br>
-
-                                    Jain Caterers stands out by blending tradition with innovation, offering event experiences that honor cultural roots while meeting modern expectations. Under Mr. Jain’s leadership, Jain Caterers creates warm, inviting atmospheres for guests. He plans to expand internationally, staying true to the brand's core values of quality, purity, and excellence.
+                                <div class="text1">Mr. Jayendra Shingala, son of the esteemed founder Shri Arjanbhai Shingala, has been instrumental in elevating Shyam Caterers to new heights of excellence. With his strong leadership and innovative approach, he has successfully managed some of Gujarat’s most prestigious events, including large-scale Swaminarayan Kathas and grand religious programs attended by populations of over 15 lakh people at a time. His ability to organize and execute such massive gatherings with flawless coordination, authentic taste, and impeccable service has made Shyam Caterers a household name in religious and cultural circles.<br /> Since its establishment in 1988, the brand has consistently upheld the values of quality, tradition, and trust. Under Jayendra Shingala’s vision, Shyam Caterers continues to combine cultural devotion with world-class hospitality, making every event—from spiritual congregations to grand celebrations—a truly memorable experience.
                                 </div>
 
 
@@ -361,7 +355,7 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                 </div>
             </div>
             <!--Col-->
-            <div class="content-col col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="content-col col-xl-6 col-lg-6 col-md-12 col-sm-12" style="margin-top:5px;">
 
                 <div class="inner clearfix wow fadeInRight" data-wow-duration="1500ms" data-wow-delay="0ms">
                     <div class="content-box">
@@ -372,10 +366,8 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                                 <img src="{{asset('front_assets/images/icons/separator.svg')}}" alt="" title="" loading="lazy">
                             </div>
                             <div class="history-paragraph-text">
-                                SHYAM CATERERS was born from a passion to celebrate the rich traditions of vegetarian and Jain cuisine while embracing the evolving tastes and modern settings. <br> <br>
-
-
-                                Inspired by the desire to serve food that aligns with ethical values and delights every palate, we embarked on a journey to redefine catering. The idea of fusion meals came naturally to us, blending timeless flavors with innovative culinary techniques to craft experiences that bridge tradition and creativity.
+                                The journey of Shyam Caterers & Event Management began in 1988 under the visionary leadership of Shri Arjanbhai Shingala, with a mission to deliver authentic taste, premium quality, and unmatched hospitality. The first milestone came in 1991 with the establishment of Shyam Dining Hall in Amreli, which quickly became a trusted name for traditional dining and celebrations. Building on this success, the second venture, Shyam Caterers – Amreli, was launched in 2000, marking the brand’s expansion into large-scale catering services.
+                                <br />In 2007, Krishna Dining Hall in Amreli further strengthened the company’s reputation as a pioneer in the catering and hospitality industry. With growing demand and trust, Shyam Caterers expanded beyond Amreli, opening a new branch in Surat in 2014, bringing its legacy of excellence to one of Gujarat’s most vibrant cities. Today, with multiple branches and countless successful events, Shyam Caterers has evolved into a symbol of trust, tradition, and innovation—continuing to serve weddings, corporate events, and grand religious gatherings with perfection.
                             </div>
                         </div>
 
@@ -458,7 +450,7 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                                 <img src="{{asset('front_assets/images/icons/separator.svg')}}" alt="" title="" loading="lazy">
                             </div>
                             <div class="service-section-text3">
-                                We aim to craft unforgettable dining experiences, and deliver exceptional vegetarian, Jain and fusion cuisine that celebrates tradition and innovation.
+                                Our mission at Shyam Caterers & Event Management is to create unforgettable experiences through exceptional food, flawless service, and innovative event solutions. Since 1988, we have been committed to upholding the values of quality, trust, and tradition while continuously embracing modern ideas to meet the evolving needs of our clients. We strive to bring people together by serving authentic flavors with world-class presentation and delivering hospitality that exceeds expectations. Whether it is a wedding, corporate event, or a grand religious gathering, our mission is to make every occasion memorable, seamless, and truly extraordinary.
                             </div>
                         </div>
                     </div>
@@ -475,10 +467,7 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                                 <img src="{{asset('front_assets/images/icons/separator.svg')}}" alt="" title="" loading="lazy">
                             </div>
                             <div class="service-section-text">
-                                We envision to inspire meaningful connections
-                                through innovative, ethical, and unforgettable
-                                culinary experiences that celebrate tradition and
-                                creativity.
+                                Our vision at Shyam Caterers & Event Management is to be recognized as the most trusted and innovative catering and event management brand in India, known for blending tradition with modern excellence. We aspire to expand our legacy beyond Gujarat, reaching new cities and communities while maintaining the same standard of authenticity, quality, and hospitality that has defined us since 1988. With a focus on continuous innovation, sustainable practices, and customer delight, our vision is to transform every celebration—whether personal, corporate, or religious—into an unforgettable experience that leaves a lasting impression.
                             </div>
                         </div>
                     </div>

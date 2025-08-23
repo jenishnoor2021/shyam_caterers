@@ -46,13 +46,16 @@ class AppServiceProvider extends ServiceProvider
             $linkdin = $company->linkdin;
         }
         View::share([
-            'company_contact' => $number,
-            'company_address' => $address,
-            'company_email' => $email,
+            'surat_contact' => $number,
+            'surat_address' => $address,
+            'surat_email' => $email,
             'facebook' => $facebook,
             'instagram' => $instagram,
             'twitter' => $twitter,
             'linkdin' => $linkdin,
+            'amreli_email' => 'shyamcaterersamreli@gmail.com',
+            'amreli_contact' => '9687047295',
+            'amreli_address' => 'Opp. ST, Bus Stand, Station Road, Amreli - 365601(Gujarat)',
         ]);
     }
 }

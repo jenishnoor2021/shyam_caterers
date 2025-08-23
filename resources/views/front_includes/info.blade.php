@@ -17,28 +17,21 @@
       Caterers | Wedding Caterers - SHYAM CATERERS <br />
       | Veg. Caterers | Wedding Caterers - SHYAM CATERERS
     </li> -->
-
+    <div class="separator"><span></span></div>
     <li style="margin-bottom: 10px;"><u>SURAT BRANCH OFFICE</u></li>
-
-    <li>{{ $company_address }}
-    </li>
+    <li>{{ $surat_address }}</li>
+    <li><a href="mailto:{{ $surat_email }}">{{ $surat_email }}</a></li>
+    <li><a href="tel:+91 {{ $surat_contact }}">+91 {{ $surat_contact }}</a></li>
     <div class="separator"><span></span></div>
 
     <li style="margin-bottom: 10px;"><u>AMRELI BRANCH OFFICE</u></li>
-    <li> Opp. ST, Bus Stand, Station Road, Amreli - 365601(Gujarat)
-    </li>
-    <div class="separator"><span></span></div>
-    <li>Open: 9.30 am - 2.30pm</li>
-    <div class="separator"><span></span></div>
-    <li>
-      <a href="mailto:{{ $company_email }}">{{ $company_email }}</a>
-    </li>
+    <li>{{ $amreli_address }}</li>
+    <li><a href="mailto:{{ $amreli_email }}">{{ $amreli_email }}</a></li>
+    <li><a href="tel:+91 {{ $amreli_contact }}">+91 {{ $amreli_contact }}</a></li>
+    <!-- <div class="separator"><span></span></div> -->
+    <!-- <li>Open: 9.30 am - 2.30pm</li> -->
+    <!-- <div class="separator"><span></span></div> -->
+
   </ul>
-  <div class="separator"><span></span></div>
-  <div class="booking-info">
-    <div class="bk-title">Booking request</div>
-    <div class="bk-no">
-      <a href="tel:+91 {{ $company_contact }}">+91 {{ $company_contact }}</a>
-    </div>
-  </div>
+  <!-- <div class="separator"><span></span></div> -->
 </div>

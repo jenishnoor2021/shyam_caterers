@@ -32,15 +32,15 @@
 
   <h2>Visit Us</h2>
   <ul class="info">
-    <li>SURAT BRANCH OFFICE: {{ $company_address }}</li>
+    <li>SURAT BRANCH OFFICE: {{ $surat_address }}</li>
     <li>AMRELI BRANCH OFFICE: Opp. ST, Bus Stand, Station Road, Amreli - 365601(Gujarat)</li>
-    <li>Open: 9.30 am - 2.30pm</li>
-    <li><a href="mailto:{{ $company_email }}">{{ $company_email }}</a></li>
+    <!-- <li>Open: 9.30 am - 2.30pm</li> -->
+    <li><a href="mailto:{{ $surat_email }}">{{ $surat_email }}</a></li>
   </ul>
   <div class="separator"><span></span></div>
   <div class="booking-info">
     <div class="bk-title">Booking request</div>
-    <div class="bk-no"><a href="tel:+91{{ $company_contact }}">+91 {{ $company_contact }}</a></div>
+    <div class="bk-no"><a href="tel:+91{{ $surat_contact }}">+91 {{ $surat_contact }}</a></div>
   </div>
 
 </div>

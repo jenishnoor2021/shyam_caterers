@@ -25,12 +25,12 @@
                         <div class="inner">
                             <h1 class="main-heading "> Crafting Culinary Experiences</h1>
                             <h1 class="main-heading1">for All Your Events.</h1>
-                            <button type="submit" class="theme-btn btn-style-one clearfix">
+                            <a href="{{URL::to('/contact')}}" type="submit" class="theme-btn btn-style-one clearfix">
                                 <span class="btn-wrap">
                                     <span class="text-one">Contact Us</span>
                                     <span class="text-two">Contact Us</span>
                                 </span>
-                            </button>
+                            </a>
                         </div>
 
                     </div>
@@ -103,7 +103,7 @@
                         <h2>Catering Our Way For All Your Special Occasion.
                         </h2>
                         <div class="text">SHYAM CATERERS is renowned as one of the best caterers in India,
-                            established for 21 years. Founded on a love for exceptional cuisine and memorable
+                            established for 37+ years. Founded on a love for exceptional cuisine and memorable
                             experiences, we specialize in creating delightful culinary moments that bring people
                             together.<br>
 
@@ -117,8 +117,8 @@
                         <div class="link-box">
                             <a href="{{ URL::to('/contact') }}" class="theme-btn btn-style-two clearfix">
                                 <span class="btn-wrap">
-                                    <span class="mobile"><i class="icon far fa-phone"></i> +91 {{ $company_contact }}</span>
-                                    <span class="text-two"><i class="icon far fa-phone"></i> +91 {{ $company_contact }}</span>
+                                    <span class="mobile"><i class="icon far fa-phone"></i> +91 {{ $surat_contact }}</span>
+                                    <span class="text-two"><i class="icon far fa-phone"></i> +91 {{ $surat_contact }}</span>
                                 </span>
                             </a>
                         </div>
@@ -151,7 +151,7 @@
             <div class="title-box centered">
                 <div class="special-offer-heading"><span>What We Do?</span></div>
                 <div class="pattern-image"><img src="{{ asset('front_assets/images/icons/separator.svg') }}" alt="" title="" loading="lazy"></div>
-                <div class="special-offer-paragraph">At SHYAM CATERERS India, we specialize in creating unforgettable culinary experiences for every
+                <div class="special-offer-paragraph">SHYAM CATERERS, we specialize in creating unforgettable culinary experiences for every
                     occasion. Whether it’s a grand celebration or a corporate event, our catering service is here to
                     make your event truly exceptional.
                 </div>
@@ -181,9 +181,7 @@
             <div class="subtitle"><span>WHY CHOOSE US</span></div>
             <div class="pattern-image2"><img src="{{ asset('front_assets/images/icons/separator.svg') }}" alt="" title="" loading="lazy"></div>
             <div class="why-us-paragraph">
-                <div class="why-us-para">At SHYAM CATERERS, Mumbai, we believe that every bite you take is a celebration of flavor, culture and
-
-                    connections. We create experiences that live with you</div>
+                <div class="why-us-para">At Shyam Caterers & Event Management, we believe every occasion deserves to be celebrated with perfection. With a legacy that began in 1988, we bring over three decades of expertise, trust, and innovation to the table. Our strength lies in delivering authentic flavors with world-class presentation, supported by a highly professional and dedicated team. From intimate gatherings to grand weddings, corporate functions, and large-scale religious events with audiences of over 15 lakh, we ensure flawless planning, seamless execution, and unmatched hospitality. With multiple branches across Gujarat and a reputation built on quality and reliability, choosing us means choosing peace of mind, unforgettable experiences, and celebrations that your guests will always remember.</div>
             </div>
             <h2>Our Strength</h2>
         </div>

@@ -13,26 +13,26 @@
 
                         <div class="info">
                             <h3 style="margin-bottom: 10px;">Shyam Caterers & Event Managment</h3>
-                            <ul>
+                            <!-- <ul>
                                 <li>Open : 09:00 am - 01:00 pm</li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="separator"><span></span><span></span><span></span></div>
                         <div class="info">
                             <h3 style="margin-bottom: 10px;">SURAT BRANCH OFFICE </h3>
                             <ul>
-                                <li>{{ $company_address }}</li>
-                                <li><a href="mailto:{{ $company_email }}">{{ $company_email }}</a></li>
-                                <li><a href="tel:+91 {{ $company_contact }}">Booking Request :+91 {{ $company_contact }}</a></li>
+                                <li>{{ $surat_address }}</li>
+                                <li><a href="mailto:{{ $surat_email }}">{{ $surat_email }}</a></li>
+                                <li><a href="tel:+91 {{ $surat_contact }}">Booking Request :+91 {{ $surat_contact }}</a></li>
                             </ul>
                         </div>
                         <div class="separator"><span></span><span></span><span></span></div>
                         <div class="info">
                             <h3 style="margin-bottom: 10px;">AMRELI BRANCH OFFICE</h3>
                             <ul>
-                                <li> Opp. ST, Bus Stand, Station Road, Amreli - 365601(Gujarat)</li>
-                                <li><a href="mailto:{{ $company_email }}">{{ $company_email }}</a></li>
-                                <li><a href="tel:+91 {{ $company_contact }}">Booking Request :+91 {{ $company_contact }}</a></li>
+                                <li> {{ $amreli_address }}</li>
+                                <li><a href="mailto:{{ $amreli_email }}">{{ $amreli_email }}</a></li>
+                                <li><a href="tel:+91 {{ $amreli_contact }}">Booking Request :+91 {{ $amreli_contact }}</a></li>
                             </ul>
                         </div>
                         <div class="separator"><span></span><span></span><span></span></div>
@@ -55,8 +55,8 @@
             <div class="footer-col links-col last col-lg-3 col-md-6 col-sm-12">
                 <div class="inner wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
                     <ul class="links">
-                        <li><a href="{{$facebook}}">facebook</a></li>
-                        <li><a href="{{$instagram}}">instagram</a></li>
+                        <li><a href="{{$facebook}}" target="_blank">facebook</a></li>
+                        <li><a href="{{$instagram}}" target="_blank">instagram</a></li>
 
                     </ul>
                 </div>

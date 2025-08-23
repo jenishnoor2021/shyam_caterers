@@ -58,7 +58,7 @@ class EventController extends Controller
             'address' => 'required|string',
             'venue' => 'required|string',
             'event_type' => 'required|string',
-            'event_date' => 'required|date',
+            // 'event_date' => 'required|date',
             'functions' => 'required|array',
             // 'functions.*.type' => 'required|string',
             'functions.*.fun_id' => 'required|exists:functios,id',
@@ -74,7 +74,7 @@ class EventController extends Controller
         $booking->address = $validated['address'];
         $booking->venue = $validated['venue'];
         $booking->event_type = $validated['event_type'];
-        $booking->event_date = $validated['event_date'];
+        // $booking->event_date = $validated['event_date'];
         $booking->function_name = json_encode($validated['functions']);
         $booking->status = 'Pending';
         $booking->save();
@@ -122,7 +122,7 @@ class EventController extends Controller
             'address' => 'required|string',
             'venue' => 'required|string',
             'event_type' => 'required|string',
-            'event_date' => 'required|date',
+            // 'event_date' => 'required|date',
             'functions' => 'required|array',
             // 'functions.*.type' => 'required|string',
             'functions.*.fun_id' => 'required|exists:functios,id',
@@ -140,7 +140,7 @@ class EventController extends Controller
             'address' => $validated['address'],
             'venue' => $validated['venue'],
             'event_type' => $validated['event_type'],
-            'event_date' => $validated['event_date'],
+            // 'event_date' => $validated['event_date'],
             'function_name' => json_encode($validated['functions']),
         ]);
 
@@ -354,47 +354,35 @@ class EventController extends Controller
         // Handle PDF generation or database save logic
         // dd($request->all());
 
-        // $data = $request->input('selected_items');
         $bookingId = $request->input('booking_id');
-
-        // foreach ($data as $function => $items) {
-        //     DB::table('booking_menu_items')->updateOrInsert(
-        //         ['booking_id' => $bookingId, 'function_id' => $function],
-        //         ['items' => json_encode($items)]
-        //     );
-        // }
-
-        //  OR
-
-        // $bookingId = $request->input('booking_id');
-        // $allFunctions = $request->input('selected_items');
-
-        // foreach ($allFunctions as $functionId => $items) {
-        //     $formattedItems = [];
-
-        //     foreach ($items as $itemId => $categoryId) {
-        //         $formattedItems[] = [
-        //             'item_id' => (int)$itemId,
-        //             'category_id' => (int)$categoryId,
-        //         ];
-        //     }
-
-        //     DB::table('booking_menu_items')->updateOrInsert(
-        //         ['booking_id' => $bookingId, 'function_id' => $functionId],
-        //         ['items' => json_encode($formattedItems)]
-        //     );
-        // }
 
         return redirect()->route('menu.pdf', $bookingId)->with('success', 'Menu saved!');
     }
+
+    // public function generatePDF(Booking $booking)
+    // {
+    //     $items = MenuItem::with('Categories')->get()->keyBy('id');
+    //     $menus = DB::table('booking_menu_items')->where('booking_id', $booking->id)->get();
+    //     $eventDetails = json_decode($booking->function_name, true);
+    //     return Pdf::loadView('front.pdf', compact('booking', 'menus', 'eventDetails', 'items'))->stream('menu.pdf');
+    // }
 
     public function generatePDF(Booking $booking)
     {
         $items = MenuItem::with('Categories')->get()->keyBy('id');
         $menus = DB::table('booking_menu_items')->where('booking_id', $booking->id)->get();
         $eventDetails = json_decode($booking->function_name, true);
-        // return Pdf::loadView('layouts.pdf', compact('booking', 'menus', 'eventDetails', 'items'))->stream('menu.pdf');
-        return Pdf::loadView('front.pdf', compact('booking', 'menus', 'eventDetails', 'items'))->stream('menu.pdf');
-        // return view('layouts.pdf', compact('booking', 'menus', 'eventDetails', 'items'));
+
+        // Build a safe filename
+        $partyName = $booking->customer_name ?? '{party_name}'; // adjust if your column is different
+        $time = now()->format('Ymd_His');
+
+        // Make it URL/file safe (remove spaces, special chars)
+        $partyNameSlug = \Str::slug($partyName, '_');
+
+        $fileName = "shyamcaterers_{$partyNameSlug}_{$time}.pdf";
+
+        return Pdf::loadView('front.pdf', compact('booking', 'menus', 'eventDetails', 'items'))
+            ->download($fileName);
     }
 }

@@ -178,15 +178,21 @@ class AdminController extends Controller
             'address' => 'required',
             'venu' => 'required',
             'message' => 'required',
+            'other_event' => 'required_if:event,other'
         ]);
 
         if ($validator->fails()) {
             return Redirect::back()->withInput($request->all())->withErrors($validator);
         }
 
+        // if user selected "Other", replace event with other_event input
+        $eventValue = $request->event === 'other' ? $request->other_event : $request->event;
+
         // dd($request->all());
 
         $input = $request->all();
+        $input['event'] = $eventValue; // overwrite event value
+        unset($input['other_event']);  // remove extra field
         Contact::create($input);
 
         try {

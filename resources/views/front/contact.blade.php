@@ -50,6 +50,7 @@
 
                 <form action="{{ URL::to('/contactstore') }}" method="POST" name="contactForm" id="contactForm">
                     @csrf
+                    <input type="text" name="website" style="display:none">
                     <div class="row mb-3">
                         <div class="col-md-4 label-block">
                             <label class="form-label">Customer Name <span class="text-danger">*</span></label>

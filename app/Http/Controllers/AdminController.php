@@ -177,9 +177,14 @@ class AdminController extends Controller
             'event_date' => 'required',
             'address' => 'required',
             'venu' => 'required',
-            'message' => 'required',
+            // 'message' => 'required',
             'other_event' => 'required_if:event,other'
         ]);
+
+        // Honeypot check
+        if (!empty($request->website)) {
+            return back()->withErrors(['error' => 'Bot detected'])->withInput();
+        }
 
         if ($validator->fails()) {
             return Redirect::back()->withInput($request->all())->withErrors($validator);
@@ -190,7 +195,8 @@ class AdminController extends Controller
 
         // dd($request->all());
 
-        $input = $request->all();
+        // $input = $request->all();
+        $input = $request->except(['website']);
         $input['event'] = $eventValue; // overwrite event value
         unset($input['other_event']);  // remove extra field
         Contact::create($input);

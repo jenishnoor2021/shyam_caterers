@@ -49,8 +49,9 @@ Route::get('/gallerys', [AdminController::class, 'gallery'])->name('site.gallery
 Route::get('/event/{id}', [AdminController::class, 'event'])->name('site.event');
 Route::get('/cuisine/{id}', [AdminController::class, 'cuisine'])->name('site.cuisine');
 Route::get('/contact', [AdminController::class, 'contact'])->name('site.contact');
+Route::get('/packages', [AdminController::class, 'packages'])->name('site.packages');
 
-Route::post('/contactstore', [AdminController::class, 'storeContact'])->name('storeContact');
+Route::post('/contactstore', [AdminController::class, 'storeContact'])->name('storeContact')->middleware('throttle:5,1');
 
 Route::get('/load-gallery', function () {
     $images = Gallery::where('is_active', 1)->inRandomOrder()->take(5)->get();

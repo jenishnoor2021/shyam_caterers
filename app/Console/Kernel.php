@@ -9,7 +9,7 @@ class Kernel extends ConsoleKernel
 {
 
     protected $commands = [
-        Commands\AutNotifi::class,
+        Commands\RefreshFacebookToken::class,
     ];
 
     /**
@@ -20,8 +20,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('aut:notifi')->everyMinute()->runInBackground();
-        // $schedule->command('aut:notifi')->everyMinute()->runInBackground();
+        // $schedule->command('facebook:refresh-token')->daily();
+        $schedule->command('facebook:refresh-token')->twiceDaily(0, 12);
     }
 
     /**

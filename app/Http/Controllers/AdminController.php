@@ -2,30 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
+use Exception;
 use Validator;
 use App\Models\User;
 use App\Models\Dishe;
 use App\Models\Event;
 use App\Models\Slider;
+use App\Models\Booking;
+use App\Models\Company;
 use App\Models\Contact;
+use App\Models\Functio;
 use App\Models\Gallery;
+use Twilio\Rest\Client;
 use App\Models\Category;
+use App\Models\MenuItem;
+use App\Models\EventType;
+use App\Models\CuisineItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\CuisineCategory;
-use App\Models\CuisineItem;
-use App\Models\EventType;
-use App\Models\Functio;
-use App\Models\MenuItem;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Twilio\Rest\Client;
-use Exception;
-use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -118,6 +120,28 @@ class AdminController extends Controller
         return view('front.index', compact('slider', 'dishes', 'eventTypes'));
     }
 
+    public function loadReels()
+    {
+        // $accessToken = config('services.instagram.token');
+        $company = Company::whereNotNull('fb_access_token')->first();
+        $userId = config('services.instagram.user_id');
+
+        // Call Instagram Graph API
+        $response = Http::get("https://graph.facebook.com/v23.0/{$userId}/media", [
+            'fields' => 'id,media_type,media_url,permalink,caption,timestamp',
+            'access_token' => $company->fb_access_token,
+        ]);
+
+        $media = $response->json();
+
+        // Filter only reels (VIDEO + permalink contains /reel/)
+        $reels = collect($media['data'] ?? [])->filter(function ($item) {
+            return $item['media_type'] === 'VIDEO' && str_contains($item['permalink'], '/reel/');
+        })->take(9); // take 3 random reels
+
+        return view('sections.reel', compact('reels'));
+    }
+
     public function about()
     {
         return view('front.about');
@@ -159,6 +183,11 @@ class AdminController extends Controller
     {
         $cuisine = CuisineCategory::with('items')->findOrFail($id);
         return view('front.cuisine', compact('cuisine'));
+    }
+
+    public function packages()
+    {
+        return view('front.packages');
     }
 
     public function contact()

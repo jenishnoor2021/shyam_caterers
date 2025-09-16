@@ -58,10 +58,12 @@ Route::get('/load-gallery', function () {
     return view('sections.gallery', compact('images'));
 });
 
-Route::get('/load-reel', function () {
-    $reels = Reel::where('is_active', 1)->inRandomOrder()->take(3)->get();
-    return view('sections.reel', compact('reels'));
-});
+// Route::get('/load-reel', function () {
+//     $reels = Reel::where('is_active', 1)->inRandomOrder()->take(3)->get();
+//     return view('sections.reel', compact('reels'));
+// });
+
+Route::get('/load-reel', [AdminController::class, 'loadReels']);
 
 Route::get('/load-about-slider', function () {
     return view('sections.about-slider');

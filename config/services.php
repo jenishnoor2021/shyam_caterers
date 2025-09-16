@@ -29,4 +29,10 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+
+    'instagram' => [
+        'user_id' => '17841475124480460',
+        'client_id'   => '1286424269631613',
+        'client_secret'   => '2aff1560ecb8cbdbe56e2d8bad0fb15a',
+    ],
 ];

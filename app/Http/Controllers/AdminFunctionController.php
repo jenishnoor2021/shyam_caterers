@@ -40,10 +40,11 @@ class AdminFunctionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'function_type' => 'required',
+            'time' => 'required|date_format:H:i',
         ]);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator);
+            return Redirect::back()->withErrors($validator)->withInput();
         }
 
         $request->merge([
@@ -52,9 +53,28 @@ class AdminFunctionController extends Controller
 
         $input = $request->all();
 
+        // Convert 24-hour format to 12-hour format for display
+        if (isset($input['time'])) {
+            $time24 = $input['time'];
+            $time12 = $this->convertTo12Hour($time24);
+            $input['time'] = $time12; // Store in 12-hour format
+        }
+
         Functio::create($input);
         return redirect('/admin/function')->with('success', "Add Record Successfully");
     }
+
+    /**
+     * Convert 24-hour format to 12-hour format
+     */
+    private function convertTo12Hour($time24)
+    {
+        if (!$time24) return '';
+
+        $time = \DateTime::createFromFormat('H:i', $time24);
+        return $time->format('g:i A');
+    }
+
 
     /**
      * Display the specified resource.
@@ -90,10 +110,11 @@ class AdminFunctionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'function_type' => 'required',
+            'time' => 'required|date_format:H:i',
         ]);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator);
+            return Redirect::back()->withErrors($validator)->withInput();
         }
 
         $push = Functio::findOrFail($id);
@@ -103,6 +124,13 @@ class AdminFunctionController extends Controller
         ]);
 
         $input = $request->all();
+
+        // Convert 24-hour format to 12-hour format for display
+        if (isset($input['time'])) {
+            $time24 = $input['time'];
+            $time12 = $this->convertTo12Hour($time24);
+            $input['time'] = $time12; // Store in 12-hour format
+        }
 
         $push->update($input);
 

@@ -25,6 +25,7 @@
         </ul>
       </li>
       <li class="{{ Request::is('gallerys') ? 'current' : '' }}"><a href="{{ URL::to('/gallerys') }}">Gallery</a></li>
+      <li class="{{ Request::is('packages') ? 'current' : '' }}"><a href="{{ URL::to('/packages') }}">Packages</a></li>
       <li class="{{ Request::is('contact') ? 'current' : '' }}"><a href="{{ URL::to('/contact') }}">Contact</a></li>
 
     </ul>
@@ -32,16 +33,17 @@
 
   <h2>Visit Us</h2>
   <ul class="info">
-    <li>SURAT BRANCH OFFICE: {{ $surat_address }}</li>
-    <li>AMRELI BRANCH OFFICE: Opp. ST, Bus Stand, Station Road, Amreli - 365601(Gujarat)</li>
-    <!-- <li>Open: 9.30 am - 2.30pm</li> -->
+    <div class="separator"><span></span></div>
+    <li style="margin-bottom: 10px;"><u>SURAT BRANCH OFFICE</u></li>
+    <li>{{ $surat_address }}</li>
     <li><a href="mailto:{{ $surat_email }}">{{ $surat_email }}</a></li>
-  </ul>
-  <div class="separator"><span></span></div>
-  <div class="booking-info">
-    <div class="bk-title">Booking request</div>
-    <div class="bk-no"><a href="tel:+91{{ $surat_contact }}">+91 {{ $surat_contact }}</a></div>
-  </div>
+    <li><a href="tel:+91 {{ $surat_contact }}">+91 {{ $surat_contact }}</a></li>
+    <div class="separator"><span></span></div>
 
+    <li style="margin-bottom: 10px;"><u>AMRELI BRANCH OFFICE</u></li>
+    <li>{{ $amreli_address }}</li>
+    <li><a href="mailto:{{ $amreli_email }}">{{ $amreli_email }}</a></li>
+    <li><a href="tel:+91 {{ $amreli_contact }}">+91 {{ $amreli_contact }}</a></li>
+  </ul>
 </div>
 <!-- / Hidden Bar Wrapper -->

@@ -134,10 +134,10 @@
               <tbody id="functionRows">
                 <tr>
                   <td>
-                    <select name="functions[0][fun_id]" class="form-select" required>
+                    <select name="functions[0][fun_id]" class="form-select function-select" required>
                       <option value="">-- Select Function --</option>
                       @foreach ($functions as $function)
-                      <option value="{{ $function->id }}">{{ $function->function_type }}</option>
+                      <option value="{{ $function->id }}" data-time="{{ $function->time }}">{{ $function->function_type }}</option>
                       @endforeach
                     </select>
                   </td>
@@ -226,10 +226,10 @@
 
     const row = document.createElement('tr');
 
-    let functionSelect = '<select name="functions[' + index + '][fun_id]" class="form-select" required>';
+    let functionSelect = '<select name="functions[' + index + '][fun_id]" class="form-select function-select" required>';
     functionSelect += '<option value="">-- Select Function --</option>';
     functionOptions.forEach(func => {
-      functionSelect += `<option value="${func.id}">${func.function_type}</option>`;
+      functionSelect += `<option value="${func.id}" data-time="${func.time}">${func.function_type}</option>`;
     });
     functionSelect += '</select>';
 
@@ -298,12 +298,39 @@
       dateFormat: "Y-m-d H:i",
       altInput: true,
       // altFormat: "F j, Y h:i K",
-      altFormat: "Y-m-d H:i K",
+      altFormat: "Y-m-d H:i",
       allowInput: true
     });
   }
 
   // Initial run for already-rendered input
   initializeDateTimePickers();
+
+  // Dropdown change
+  document.addEventListener("change", function(e) {
+    if (e.target.classList.contains("function-select")) {
+      const selected = e.target.options[e.target.selectedIndex];
+      const defaultTime = selected.getAttribute("data-time"); // e.g. "8:00 PM"
+
+      if (defaultTime) {
+        const row = e.target.closest("tr");
+        const datetimeInput = row.querySelector(".datetimepicker");
+
+        if (datetimeInput._flatpickr) {
+          let currentDate = datetimeInput._flatpickr.selectedDates[0] || new Date();
+
+          // Build string in the same format as flatpickr altFormat
+          let yyyy = currentDate.getFullYear();
+          let mm = String(currentDate.getMonth() + 1).padStart(2, "0");
+          let dd = String(currentDate.getDate()).padStart(2, "0");
+
+          let dateTimeString = `${yyyy}-${mm}-${dd} ${defaultTime}`; // "2025-09-13 8:00 PM"
+
+          // Explicitly parse using same format with AM/PM
+          datetimeInput._flatpickr.setDate(dateTimeString, true, "Y-m-d h:i K");
+        }
+      }
+    }
+  });
 </script>
 @endsection

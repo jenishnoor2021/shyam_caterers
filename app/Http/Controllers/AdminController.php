@@ -196,6 +196,66 @@ class AdminController extends Controller
         return view('front.contact', compact('events'));
     }
 
+    // public function storeContact(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required',
+    //         'email' => 'required',
+    //         'contact' => 'required',
+    //         'event' => 'required',
+    //         'event_date' => 'required',
+    //         'address' => 'required',
+    //         'venu' => 'required',
+    //         // 'message' => 'required',
+    //         'other_event' => 'required_if:event,other'
+    //     ]);
+
+    //     // Honeypot check
+    //     if (!empty($request->website)) {
+    //         return back()->withErrors(['error' => 'Bot detected'])->withInput();
+    //     }
+
+    //     if ($validator->fails()) {
+    //         return Redirect::back()->withInput($request->all())->withErrors($validator);
+    //     }
+
+    //     // if user selected "Other", replace event with other_event input
+    //     $eventValue = $request->event === 'other' ? $request->other_event : $request->event;
+
+    //     // dd($request->all());
+
+    //     // $input = $request->all();
+    //     $input = $request->except(['website']);
+    //     $input['event'] = $eventValue; // overwrite event value
+    //     unset($input['other_event']);  // remove extra field
+    //     Contact::create($input);
+
+    //     try {
+    //         $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
+
+    //         $body = "New Contact Form Submission\n\n" .
+    //             "Name: {$request->name}\n" .
+    //             "Contact: {$request->contact}\n";
+    //         // "Event: {$request->event}";
+
+    //         $twilio->messages->create(
+    //             env('OWNER_WHATSAPP'),
+    //             [
+    //                 "from" => env('TWILIO_WHATSAPP_FROM'),
+    //                 "body" => $body
+    //             ]
+    //         );
+    //     } catch (Exception $e) {
+    //         // Log the error for debugging
+    //         Log::error('Twilio send error: ' . $e->getMessage());
+
+    //         // Optional: Notify admin or display friendly message
+    //         // return redirect()->back()->with("warning", "Contact saved, but failed to send WhatsApp notification.");
+    //     }
+
+    //     return redirect()->back()->with("success", "Contact request send successfully!");
+    // }
+
     public function storeContact(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -222,38 +282,53 @@ class AdminController extends Controller
         // if user selected "Other", replace event with other_event input
         $eventValue = $request->event === 'other' ? $request->other_event : $request->event;
 
-        // dd($request->all());
-
-        // $input = $request->all();
         $input = $request->except(['website']);
         $input['event'] = $eventValue; // overwrite event value
         unset($input['other_event']);  // remove extra field
         Contact::create($input);
 
+        // ✅ WhatsApp API (wapi.co.in) Integration
         try {
-            $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
+            $authKey = "SHYAMCATERESXX1D"; // your API key
+            $mobileNumber = "918128737020"; // can be comma separated
 
-            $body = "New Contact Form Submission\n\n" .
+            $url = "https://wapi.co.in/sendMessage.php";
+
+            $message = "New Contact Form Submission\n\n" .
                 "Name: {$request->name}\n" .
-                "Contact: {$request->contact}\n" .
-                "Event: {$request->event}";
+                "Contact: {$request->contact}\n";
 
-            $twilio->messages->create(
-                env('OWNER_WHATSAPP'),
-                [
-                    "from" => env('TWILIO_WHATSAPP_FROM'),
-                    "body" => $body
-                ]
-            );
-        } catch (Exception $e) {
-            // Log the error for debugging
-            Log::error('Twilio send error: ' . $e->getMessage());
+            $postData = [
+                'AUTH_KEY' => $authKey,
+                'phone'    => $mobileNumber,
+                'message'  => $message,
+            ];
 
-            // Optional: Notify admin or display friendly message
-            // return redirect()->back()->with("warning", "Contact saved, but failed to send WhatsApp notification.");
+            $ch = curl_init();
+            curl_setopt_array($ch, [
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => $postData,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_CONNECTTIMEOUT => 10, // max 10 sec to connect
+                CURLOPT_TIMEOUT => 15,        // max 15 sec to finish request
+            ]);
+
+            $output = curl_exec($ch);
+
+            if (curl_errno($ch)) {
+                Log::error('WhatsApp API Error: ' . curl_error($ch));
+            }
+            curl_close($ch);
+
+            Log::info('WhatsApp API Response: ' . $output);
+        } catch (\Exception $e) {
+            Log::error('WhatsApp send error: ' . $e->getMessage());
         }
 
-        return redirect()->back()->with("success", "Contact request send successfully!");
+        return redirect()->back()->with("success", "Contact request sent successfully!");
     }
 
     /**

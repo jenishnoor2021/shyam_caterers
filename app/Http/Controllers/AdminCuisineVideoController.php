@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Validator;
-use App\Models\CuisineItem;
+use App\Models\CuisineVideo;
 use Illuminate\Http\Request;
 use App\Models\CuisineCategory;
 use Illuminate\Support\Facades\Redirect;
 
-class AdminCuisineItemsController extends Controller
+class AdminCuisineVideoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,16 +17,10 @@ class AdminCuisineItemsController extends Controller
      */
     public function index(Request $request)
     {
-        $category = CuisineCategory::orderBy('id', 'DESC')->get();
-        $query = CuisineItem::orderBy('id', 'DESC');
-
-        if ($request->has('categories_id') && $request->categories_id != '') {
-            $query->where('cuisine_category_id', $request->categories_id);
-        }
-
+        $query = CuisineVideo::orderBy('id', 'DESC');
         $items = $query->get();
 
-        return view('admin.cuisineitem.index', compact('items', 'category'));
+        return view('admin.cuisinevideo.index', compact('items'));
     }
 
     /**
@@ -36,8 +30,7 @@ class AdminCuisineItemsController extends Controller
      */
     public function create()
     {
-        $category = CuisineCategory::orderBy('id', 'DESC')->get();
-        return view('admin.cuisineitem.create', compact('category'));
+        return view('admin.cuisinevideo.create');
     }
 
     /**
@@ -49,18 +42,12 @@ class AdminCuisineItemsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'file' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'item_name' => 'required',
-            'cuisine_category_id' => 'required',
+            'file' => 'required|mimes:mp4,mov,avi,wmv',
         ]);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator);
         }
-
-        $request->merge([
-            'item_name' => strtoupper($request->item_name)
-        ]);
 
         $input = $request->all();
         if ($file = $request->file('file')) {
@@ -70,14 +57,14 @@ class AdminCuisineItemsController extends Controller
 
             $name = time() . $str;
 
-            $file->move('cusineitems', $name);
+            $file->move('cusinevideos', $name);
 
             $input['file'] = "$name";
         }
 
         // $input = $request->all();
-        CuisineItem::create($input);
-        return redirect('/admin/cuisine_items')->with('success', "Add Record Successfully");
+        CuisineVideo::create($input);
+        return redirect('/admin/cuisine_video')->with('success', "Add Record Successfully");
     }
 
     /**
@@ -99,9 +86,8 @@ class AdminCuisineItemsController extends Controller
      */
     public function edit($id)
     {
-        $category = CuisineCategory::orderBy('id', 'DESC')->get();
-        $item = CuisineItem::findOrFail($id);
-        return view('admin.cuisineitem.edit', compact('category', 'item'));
+        $item = CuisineVideo::findOrFail($id);
+        return view('admin.cuisinevideo.edit', compact('item'));
     }
 
     /**
@@ -114,20 +100,14 @@ class AdminCuisineItemsController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            // 'file' => 'required',
-            'item_name' => 'required',
-            'cuisine_category_id' => 'required',
+            'file' => 'required',
         ]);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator);
         }
 
-        $push = CuisineItem::findOrFail($id);
-
-        $request->merge([
-            'item_name' => strtoupper($request->item_name)
-        ]);
+        $push = CuisineVideo::findOrFail($id);
 
         $input = $request->all();
 
@@ -138,11 +118,11 @@ class AdminCuisineItemsController extends Controller
 
             $name = time() . $str;
 
-            $file->move('cusineitems', $name);
+            $file->move('cusinevideos', $name);
 
             $input['file'] = "$name";
 
-            if ($push->file == "/cusineitems/") {
+            if ($push->file == "/cusinevideos/") {
             } else {
                 if (file_exists(public_path() . $push->file)) {
                     unlink(public_path() . $push->file);
@@ -152,7 +132,7 @@ class AdminCuisineItemsController extends Controller
 
         $push->update($input);
 
-        return  redirect('/admin/cuisine_items')->with('success', "Update Record Successfully");
+        return  redirect('/admin/cuisine_video')->with('success', "Update Record Successfully");
     }
 
     /**
@@ -163,8 +143,8 @@ class AdminCuisineItemsController extends Controller
      */
     public function destroy($id)
     {
-        $item = CuisineItem::findOrFail($id);
-        if ($item->file == '/cusineitems/') {
+        $item = CuisineVideo::findOrFail($id);
+        if ($item->file == '/cusinevideos/') {
         } else {
             if (file_exists(public_path() . $item->file)) {
                 unlink(public_path() . $item->file);
@@ -178,7 +158,7 @@ class AdminCuisineItemsController extends Controller
 
     public function statusUpdate(Request $request)
     {
-        $item = CuisineItem::findOrFail($request->id);
+        $item = CuisineVideo::findOrFail($request->id);
 
         if ($item) {
             $item->is_active = !$item->is_active; // Toggle the status

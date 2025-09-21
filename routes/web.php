@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Reel;
+use App\Models\Gallery;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -8,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\AdminFaqController;
 use App\Http\Controllers\AdminReelController;
 use App\Http\Controllers\AdminTarotController;
+use App\Http\Controllers\AdminVideoController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminDishesController;
 use App\Http\Controllers\AdminEventsController;
@@ -16,6 +19,7 @@ use App\Http\Controllers\AdminCompanyController;
 use App\Http\Controllers\AdminContactController;
 use App\Http\Controllers\AdminGalleryController;
 use App\Http\Controllers\AdminInquiryController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminSlidersController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminFunctionController;
@@ -25,11 +29,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AdminEventTypeController;
 use App\Http\Controllers\AdminTestominalController;
 use App\Http\Controllers\AdminCuisineItemsController;
+use App\Http\Controllers\AdminCuisineVideoController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\AdminCuisineCategoryController;
-use App\Models\Gallery;
-use App\Models\Reel;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +49,8 @@ Route::get('/', [AdminController::class, 'siteHomePage'])->name('site.home');
 
 Route::get('/about', [AdminController::class, 'about'])->name('site.about');
 Route::get('/gallerys', [AdminController::class, 'gallery'])->name('site.gallerys');
+Route::get('/video', [AdminController::class, 'videos'])->name('site.videos');
+Route::get('/cuisine_videos', [AdminController::class, 'cuisineVideo'])->name('site.cuisions_video');
 Route::get('/event/{id}', [AdminController::class, 'event'])->name('site.event');
 Route::get('/cuisine/{id}', [AdminController::class, 'cuisine'])->name('site.cuisine');
 Route::get('/contact', [AdminController::class, 'contact'])->name('site.contact');
@@ -227,7 +232,33 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::patch('admin/cuisine_items/update/{id}', [AdminCuisineItemsController::class, 'update'])->name('admin.cuisine_items.update');
     Route::get('admin/cuisine_items/destroy/{id}', [AdminCuisineItemsController::class, 'destroy'])->name('admin.cuisine_items.destroy');
     Route::post("admin/cuisine_items/active", [AdminCuisineItemsController::class, 'statusUpdate'])->name('admin.cuisine_items.active');
+
+    Route::get("admin/video", [AdminVideoController::class, 'index'])->name('admin.video.index');
+    Route::get('admin/video/create', [AdminVideoController::class, 'create'])->name('admin.video.create');
+    Route::post('admin/video/store', [AdminVideoController::class, 'store'])->name('admin.video.store');
+    Route::get('admin/video/edit/{id}', [AdminVideoController::class, 'edit'])->name('admin.video.edit');
+    Route::patch('admin/video/update/{id}', [AdminVideoController::class, 'update'])->name('admin.video.update');
+    Route::get('admin/video/destroy/{id}', [AdminVideoController::class, 'destroy'])->name('admin.video.destroy');
+    Route::post("admin/video/active", [AdminVideoController::class, 'statusUpdate'])->name('admin.video.active');
+
+    Route::get("admin/cuisine_video", [AdminCuisineVideoController::class, 'index'])->name('admin.cuisine_video.index');
+    Route::get('admin/cuisine_video/create', [AdminCuisineVideoController::class, 'create'])->name('admin.cuisine_video.create');
+    Route::post('admin/cuisine_video/store', [AdminCuisineVideoController::class, 'store'])->name('admin.cuisine_video.store');
+    Route::get('admin/cuisine_video/edit/{id}', [AdminCuisineVideoController::class, 'edit'])->name('admin.cuisine_video.edit');
+    Route::patch('admin/cuisine_video/update/{id}', [AdminCuisineVideoController::class, 'update'])->name('admin.cuisine_video.update');
+    Route::get('admin/cuisine_video/destroy/{id}', [AdminCuisineVideoController::class, 'destroy'])->name('admin.cuisine_video.destroy');
+    Route::post("admin/cuisine_video/active", [AdminCuisineVideoController::class, 'statusUpdate'])->name('admin.cuisine_video.active');
+
+    Route::get("admin/profile", [AdminProfileController::class, 'index'])->name('admin.profile.index');
+    Route::get('admin/profile/create', [AdminProfileController::class, 'create'])->name('admin.profile.create');
+    Route::post('admin/profile/store', [AdminProfileController::class, 'store'])->name('admin.profile.store');
+    Route::get('admin/profile/edit/{id}', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::patch('admin/profile/update/{id}', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+    Route::get('admin/profile/destroy/{id}', [AdminProfileController::class, 'destroy'])->name('admin.profile.destroy');
+    Route::post("admin/profile/active", [AdminProfileController::class, 'statusUpdate'])->name('admin.profile.active');
 });
+
+Route::get('/{slug}', [AdminController::class, 'openUrl'])->name('open.url');
 
 //Clear Cache facade value:
 Route::get('/admin/clear-cache', function () {

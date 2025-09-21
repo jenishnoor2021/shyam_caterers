@@ -5,6 +5,28 @@
     @include('front_includes.head')
 
     @yield('page_style')
+
+    <style>
+        #instagram_icon {
+            bottom: 150px;
+            cursor: pointer;
+            overflow: hidden;
+            position: fixed;
+            right: 20px;
+            left: auto;
+            text-align: center;
+            z-index: 1000;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+
+        #instagram_icon img {
+            height: 50px;
+            width: 50px;
+        }
+    </style>
 </head>
 
 <body>
@@ -118,6 +140,10 @@
 
     <a href="https://wa.me/+91{{ $surat_contact }}" target="_blank" id="whatsapp_icon">
         <img src="{{asset('front_assets/images/whatsapp.png')}}" alt="whatsapp-img">
+    </a>
+
+    <a href="{{$instagram}}" target="_blank" id="instagram_icon">
+        <img src="{{asset('front_assets/images/Instagram.png')}}" alt="whatsapp-img">
     </a>
 
     <!-- Google tag (gtag.js) -->

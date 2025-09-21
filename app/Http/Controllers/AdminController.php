@@ -13,6 +13,7 @@ use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Functio;
 use App\Models\Gallery;
+use App\Models\Profile;
 use Twilio\Rest\Client;
 use App\Models\Category;
 use App\Models\MenuItem;
@@ -21,6 +22,8 @@ use App\Models\CuisineItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\CuisineCategory;
+use App\Models\CuisineVideo;
+use App\Models\Video;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -171,6 +174,22 @@ class AdminController extends Controller
         // dd($eventGalleries);
 
         return view('front.gallery', compact('eventGalleries'));
+    }
+
+    public function videos()
+    {
+        $videos = Video::where('is_active', 1)->get();
+        // dd($videos);
+
+        return view('front.videos', compact('videos'));
+    }
+
+    public function cuisineVideo()
+    {
+        $cuisineVideos = CuisineVideo::where('is_active', 1)->get();
+        // dd($cuisionsVideos);
+
+        return view('front.cuisine_video', compact('cuisineVideos'));
     }
 
     public function event($id)
@@ -329,6 +348,20 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with("success", "Contact request sent successfully!");
+    }
+
+    public function openUrl($slug)
+    {
+        $user = Profile::where(['slug' => $slug])->first();
+        if (!$user) {
+            abort(404, 'Profile not found');
+        }
+
+        if ($user->is_active != 1) {
+            abort(403, 'Your account is not activated. Please contact administrator.');
+        }
+
+        return view('front.view-profile', compact('user'));
     }
 
     /**

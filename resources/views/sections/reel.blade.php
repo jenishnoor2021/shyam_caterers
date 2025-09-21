@@ -23,7 +23,7 @@
                     </video>
                 </a>
                 @if(!empty($reel['caption']))
-                <p style="text-align:center;margin-top:8px;">{{ Str::limit($reel['caption'], 80) }}</p>
+                <p style="text-align:center;margin-top:8px;">{{ Str::limit($reel['caption'], 180) }}</p>
                 @endif
             </div>
             @endforeach

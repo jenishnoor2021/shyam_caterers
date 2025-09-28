@@ -19,7 +19,7 @@
                         muted
                         loop
                         preload="metadata"
-                        style="width:100%;border-radius:10px;">
+                        style="width:100%;border-radius:10px;height:700px;">
                     </video>
                 </a>
                 @if(!empty($reel['caption']))

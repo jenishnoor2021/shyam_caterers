@@ -29,7 +29,7 @@
     </style>
 </head>
 
-<body>
+<body class="loading">
 
     <div class="page-wrapper">
 
@@ -172,16 +172,21 @@
     <script src="{{ asset('front_assets/js/custom-script.js') }}"></script>
 
     <script>
-        window.addEventListener('load', function() {
-            const loader = document.querySelector('.loader-mask');
-            loader.classList.add('fade-out');
+        // window.addEventListener('load', function() {
+        //     const loader = document.querySelector('.loader-mask');
+        //     loader.classList.add('fade-out');
 
-            document.body.classList.add('hidden');
+        //     document.body.classList.add('hidden');
 
-            setTimeout(() => {
-                loader.style.display = 'none';
-                document.body.classList.remove('hidden');
-            }, 1000); // after transition
+        //     setTimeout(() => {
+        //         loader.style.display = 'none';
+        //         document.body.classList.remove('hidden');
+        //     }, 1000); // after transition
+        // });
+
+        window.addEventListener("load", () => {
+            document.body.classList.remove("loading");
+            document.querySelector(".loader-mask").style.display = "none";
         });
     </script>
     @yield('page_script')

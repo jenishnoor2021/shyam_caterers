@@ -3,6 +3,40 @@
 @section('page_style')
 <!-- Flatpickr CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<style>
+  .function-card {
+    position: relative;
+  }
+
+  .function-card .card {
+    background: transparent;
+    border: 2px solid rgb(228, 197, 144);
+  }
+
+  .function-card .card-body {
+    padding: 1rem;
+  }
+
+  .function-card .form-label {
+    margin-bottom: 0.25rem;
+  }
+
+  .action-mobile .btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 767.98px) {
+    .function-card+.function-card {
+      margin-top: 1rem;
+    }
+
+    .function-card .card-body {
+      padding: 0.75rem;
+    }
+  }
+</style>
 @endsection
 
 @section('content')
@@ -12,8 +46,6 @@
   <div class="image-layer" style="background-image: url({{asset('front_assets/images/resource/aboutbg.jpg')}})"></div>
   <div class="auto-container">
     <div class="inner">
-
-
       <h1><span>Booking</span></h1>
     </div>
   </div>
@@ -120,7 +152,7 @@
               <img src="{{asset('front_assets/images/icons/separator.svg')}}" alt="" title="" loading="lazy">
             </div>
           </div>
-          <div class="table-responsive">
+          <div class="table-responsive d-none d-md-block">
             <table class="table table-bordered align-middle" id="functionTable">
               <thead class="table-light">
                 <tr>
@@ -148,6 +180,38 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          <!-- Mobile Card View -->
+          <div class="d-block d-md-none" id="functionCardContainer">
+            <div class="function-card mb-3" data-index="0">
+              <div class="card border">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 mb-3">
+                      <label class="form-label fw-bold">Function Type <span class="text-danger">*</span></label>
+                      <select name="functions[0][fun_id]" class="form-select function-select" required>
+                        <option value="">-- Select Function --</option>
+                        @foreach ($functions as $function)
+                        <option value="{{ $function->id }}" data-time="{{ $function->time }}">{{ $function->function_type }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label fw-bold">Person <span class="text-danger">*</span></label>
+                      <input type="number" name="functions[0][person]" class="form-control" placeholder="Enter person" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label class="form-label fw-bold">Date &amp; Time <span class="text-danger">*</span></label>
+                      <input type="text" name="functions[0][datetime]" class="form-control datetimepicker" placeholder="Enter date time" required>
+                    </div>
+                    <div class="col-12">
+                      <div class="action-mobile text-end"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="mb-5">
@@ -198,19 +262,45 @@
   const functionOptions = @json($functions);
 
   function addFunctionRow() {
-    const rows = document.querySelectorAll("#functionRows tr");
-    const lastRow = rows[rows.length - 1];
-
-    // Validate required fields in the last row
-    const selects = lastRow.querySelectorAll("select[required]");
-    const inputs = lastRow.querySelectorAll("input[required]");
+    let lastDateTime = '';
     let isValid = true;
 
-    [...selects, ...inputs].forEach(input => {
-      if (!input.value.trim()) {
-        isValid = false;
+    // Check if we're on mobile or desktop
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      // Validate mobile cards
+      const mobileCards = document.querySelectorAll(".function-card");
+      const lastCard = mobileCards[mobileCards.length - 1];
+      const selects = lastCard.querySelectorAll("select[required]");
+      const inputs = lastCard.querySelectorAll("input[required]");
+
+      [...selects, ...inputs].forEach(input => {
+        if (!input.value.trim()) {
+          isValid = false;
+        }
+      });
+
+      if (lastCard.querySelector("input[name*='[datetime]']")) {
+        lastDateTime = lastCard.querySelector("input[name*='[datetime]']").value;
       }
-    });
+    } else {
+      // Validate desktop table
+      const desktopRows = document.querySelectorAll("#functionRows tr");
+      const lastRow = desktopRows[desktopRows.length - 1];
+      const selects = lastRow.querySelectorAll("select[required]");
+      const inputs = lastRow.querySelectorAll("input[required]");
+
+      [...selects, ...inputs].forEach(input => {
+        if (!input.value.trim()) {
+          isValid = false;
+        }
+      });
+
+      if (lastRow.querySelector("input[name*='[datetime]']")) {
+        lastDateTime = lastRow.querySelector("input[name*='[datetime]']").value;
+      }
+    }
 
     if (!isValid) {
       Swal.fire({
@@ -221,33 +311,65 @@
       return;
     }
 
-    // Get datetime value from last row to copy into new row
-    const lastDateTime = lastRow.querySelector("input[name*='[datetime]']").value;
-
-    const row = document.createElement('tr');
-
-    let functionSelect = '<select name="functions[' + index + '][fun_id]" class="form-select function-select" required>';
-    functionSelect += '<option value="">-- Select Function --</option>';
+    // Create function select options HTML
+    let functionSelectHTML = '<select name="functions[' + index + '][fun_id]" class="form-select function-select" required>';
+    functionSelectHTML += '<option value="">-- Select Function --</option>';
     functionOptions.forEach(func => {
-      functionSelect += `<option value="${func.id}" data-time="${func.time}">${func.function_type}</option>`;
+      functionSelectHTML += `<option value="${func.id}" data-time="${func.time}">${func.function_type}</option>`;
     });
-    functionSelect += '</select>';
+    functionSelectHTML += '</select>';
 
+    // Add to desktop table (always create both, but only one will be visible)
+    const row = document.createElement('tr');
     row.innerHTML = `
-            <td>${functionSelect}</td>
-            <td><input type="number" name="functions[${index}][person]" class="form-control" placeholder="Enter person" required></td>
-            <td><input type="text" name="functions[${index}][datetime]" class="form-control datetimepicker" placeholder="Enter date time" value="${lastDateTime}" required></td>
-            <td class="action">
-                <button type="button" class="btn btn-sm btn-danger" onclick="removeFunctionRow(this)"><i class="fa fa-trash"></i></button>
-            </td>
-        `;
+      <td>${functionSelectHTML}</td>
+      <td><input type="number" name="functions[${index}][person]" class="form-control" placeholder="Enter person" required></td>
+      <td><input type="text" name="functions[${index}][datetime]" class="form-control datetimepicker" placeholder="Enter date time" value="${lastDateTime}" required></td>
+      <td class="action"></td>
+    `;
     document.getElementById('functionRows').appendChild(row);
+
+    // Add to mobile cards
+    const cardContainer = document.getElementById('functionCardContainer');
+    const newCard = document.createElement('div');
+    newCard.className = 'function-card mb-3';
+    newCard.setAttribute('data-index', index);
+
+    newCard.innerHTML = `
+      <div class="card border">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <label class="form-label fw-bold">Function Type <span class="text-danger">*</span></label>
+              ${functionSelectHTML}
+            </div>
+            <div class="col-12 mb-3">
+              <label class="form-label fw-bold">Person <span class="text-danger">*</span></label>
+              <input type="number" name="functions[${index}][person]" class="form-control" placeholder="Enter person" required>
+            </div>
+            <div class="col-12 mb-3">
+              <label class="form-label fw-bold">Date &amp; Time <span class="text-danger">*</span></label>
+              <input type="text" name="functions[${index}][datetime]" class="form-control datetimepicker" placeholder="Enter date time" value="${lastDateTime}" required>
+            </div>
+            <div class="col-12">
+              <div class="action-mobile text-end"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    cardContainer.appendChild(newCard);
+
     index++;
-    toggleRemoveButtons();
-    initializeDateTimePickers();
+
+    // Initialize date pickers for new elements
+    setTimeout(() => {
+      initializeDateTimePickers();
+      toggleRemoveButtons();
+    }, 100);
   }
 
-  function removeFunctionRow(button) {
+  function removeFunction(button, isMobile = false) {
     Swal.fire({
       title: 'Are you sure?',
       text: "Do you want to remove this function?",
@@ -262,19 +384,52 @@
       allowOutsideClick: false
     }).then((result) => {
       if (result.isConfirmed) {
-        button.closest('tr').remove();
+        let elementIndex;
+
+        if (isMobile) {
+          const card = button.closest('.function-card');
+          const allCards = document.querySelectorAll('.function-card');
+          elementIndex = Array.from(allCards).indexOf(card);
+          card.remove();
+
+          // Remove corresponding desktop row
+          const desktopRows = document.querySelectorAll("#functionRows tr");
+          if (desktopRows[elementIndex]) {
+            desktopRows[elementIndex].remove();
+          }
+        } else {
+          const row = button.closest('tr');
+          const allRows = document.querySelectorAll("#functionRows tr");
+          elementIndex = Array.from(allRows).indexOf(row);
+          row.remove();
+
+          // Remove corresponding mobile card
+          const mobileCards = document.querySelectorAll(".function-card");
+          if (mobileCards[elementIndex]) {
+            mobileCards[elementIndex].remove();
+          }
+        }
+
         toggleRemoveButtons();
-        Swal.fire(
-          'Removed!',
-          'The function has been removed.',
-          'success'
-        )
+        Swal.fire('Removed!', 'The function has been removed.', 'success');
       }
     });
   }
 
+  // Separate functions for desktop and mobile remove buttons
+  function removeFunctionRow(button) {
+    removeFunction(button, false);
+  }
+
+  function removeFunctionCard(button) {
+    removeFunction(button, true);
+  }
+
   function toggleRemoveButtons() {
     const rows = document.querySelectorAll("#functionRows tr");
+    const cards = document.querySelectorAll(".function-card");
+
+    // Toggle desktop table buttons
     rows.forEach((row, i) => {
       const actionCell = row.querySelector('.action');
       if (rows.length === 1) {
@@ -283,9 +438,59 @@
         actionCell.innerHTML = `<button type="button" class="btn btn-sm btn-danger" onclick="removeFunctionRow(this)"><i class="fa fa-trash"></i></button>`;
       }
     });
+
+    // Toggle mobile card buttons
+    cards.forEach((card, i) => {
+      const actionCell = card.querySelector('.action-mobile');
+      if (cards.length === 1) {
+        actionCell.innerHTML = '';
+      } else {
+        actionCell.innerHTML = `<button type="button" class="btn btn-sm btn-danger" onclick="removeFunctionCard(this)"><i class="fa fa-trash"></i> Remove</button>`;
+      }
+    });
   }
 
-  window.onload = toggleRemoveButtons;
+  // Add event listeners to sync values when inputs change
+  document.addEventListener('input', function(e) {
+    if (e.target.matches('#functionRows input, #functionRows select, .function-card input, .function-card select')) {
+      // Find the corresponding element in the other layout
+      const isInMobile = e.target.closest('.function-card') !== null;
+      const isInDesktop = e.target.closest('#functionRows tr') !== null;
+
+      if (isInMobile) {
+        // Sync to desktop
+        const card = e.target.closest('.function-card');
+        const cardIndex = Array.from(document.querySelectorAll('.function-card')).indexOf(card);
+        const desktopRows = document.querySelectorAll('#functionRows tr');
+
+        if (desktopRows[cardIndex]) {
+          const fieldName = e.target.name;
+          const correspondingField = desktopRows[cardIndex].querySelector(`[name="${fieldName}"]`);
+          if (correspondingField) {
+            correspondingField.value = e.target.value;
+          }
+        }
+      } else if (isInDesktop) {
+        // Sync to mobile
+        const row = e.target.closest('tr');
+        const rowIndex = Array.from(document.querySelectorAll('#functionRows tr')).indexOf(row);
+        const mobileCards = document.querySelectorAll('.function-card');
+
+        if (mobileCards[rowIndex]) {
+          const fieldName = e.target.name;
+          const correspondingField = mobileCards[rowIndex].querySelector(`[name="${fieldName}"]`);
+          if (correspondingField) {
+            correspondingField.value = e.target.value;
+          }
+        }
+      }
+    }
+  });
+
+  window.onload = function() {
+    toggleRemoveButtons();
+    initializeDateTimePickers();
+  };
 </script>
 
 <!-- Flatpickr JS -->
@@ -293,41 +498,131 @@
 
 <script>
   function initializeDateTimePickers() {
+    // Destroy existing instances first to avoid conflicts
+    document.querySelectorAll(".datetimepicker").forEach(input => {
+      if (input._flatpickr) {
+        input._flatpickr.destroy();
+      }
+    });
+
+    // Initialize all date time picker inputs
     flatpickr(".datetimepicker", {
       enableTime: true,
       dateFormat: "Y-m-d H:i",
       altInput: true,
-      // altFormat: "F j, Y h:i K",
       altFormat: "Y-m-d H:i",
-      allowInput: true
+      allowInput: true,
+      disableMobile: true,
+      onChange: function(selectedDates, dateStr, instance) {
+        // Sync the value to the corresponding input in the other layout
+        const input = instance.input;
+        const fieldName = input.name;
+
+        // Find corresponding field in other layout
+        if (input.closest('.function-card')) {
+          // This is mobile, sync to desktop
+          const card = input.closest('.function-card');
+          const cardIndex = Array.from(document.querySelectorAll('.function-card')).indexOf(card);
+          const desktopRows = document.querySelectorAll('#functionRows tr');
+
+          if (desktopRows[cardIndex]) {
+            const correspondingField = desktopRows[cardIndex].querySelector(`[name="${fieldName}"]`);
+            if (correspondingField && correspondingField._flatpickr) {
+              correspondingField._flatpickr.setDate(dateStr, true);
+            }
+          }
+        } else if (input.closest('#functionRows')) {
+          // This is desktop, sync to mobile
+          const row = input.closest('tr');
+          const rowIndex = Array.from(document.querySelectorAll('#functionRows tr')).indexOf(row);
+          const mobileCards = document.querySelectorAll('.function-card');
+
+          if (mobileCards[rowIndex]) {
+            const correspondingField = mobileCards[rowIndex].querySelector(`[name="${fieldName}"]`);
+            if (correspondingField && correspondingField._flatpickr) {
+              correspondingField._flatpickr.setDate(dateStr, true);
+            }
+          }
+        }
+      }
     });
   }
 
   // Initial run for already-rendered input
-  initializeDateTimePickers();
+  // initializeDateTimePickers();
 
   // Dropdown change
   document.addEventListener("change", function(e) {
     if (e.target.classList.contains("function-select")) {
       const selected = e.target.options[e.target.selectedIndex];
-      const defaultTime = selected.getAttribute("data-time"); // e.g. "8:00 PM"
+      const defaultTime = selected.getAttribute("data-time");
 
-      if (defaultTime) {
-        const row = e.target.closest("tr");
-        const datetimeInput = row.querySelector(".datetimepicker");
+      if (defaultTime && e.target.value) {
+        const fieldName = e.target.name;
+        let currentCard = null;
+        let currentRow = null;
 
-        if (datetimeInput._flatpickr) {
-          let currentDate = datetimeInput._flatpickr.selectedDates[0] || new Date();
+        // Determine if this change is from mobile or desktop
+        if (e.target.closest('.function-card')) {
+          currentCard = e.target.closest('.function-card');
+        } else if (e.target.closest('#functionRows')) {
+          currentRow = e.target.closest('tr');
+        }
 
-          // Build string in the same format as flatpickr altFormat
-          let yyyy = currentDate.getFullYear();
-          let mm = String(currentDate.getMonth() + 1).padStart(2, "0");
-          let dd = String(currentDate.getDate()).padStart(2, "0");
+        // Function to set date with time
+        const setDateWithTime = (datetimeInput) => {
+          if (datetimeInput && datetimeInput._flatpickr) {
+            let currentDate = datetimeInput._flatpickr.selectedDates[0] || new Date();
+            let yyyy = currentDate.getFullYear();
+            let mm = String(currentDate.getMonth() + 1).padStart(2, "0");
+            let dd = String(currentDate.getDate()).padStart(2, "0");
+            let dateTimeString = `${yyyy}-${mm}-${dd} ${defaultTime}`;
 
-          let dateTimeString = `${yyyy}-${mm}-${dd} ${defaultTime}`; // "2025-09-13 8:00 PM"
+            datetimeInput._flatpickr.setDate(dateTimeString, true, "Y-m-d h:i K");
+          }
+        };
 
-          // Explicitly parse using same format with AM/PM
-          datetimeInput._flatpickr.setDate(dateTimeString, true, "Y-m-d h:i K");
+        if (currentCard) {
+          // Update mobile card datetime
+          const mobileDateInput = currentCard.querySelector(".datetimepicker");
+          setDateWithTime(mobileDateInput);
+
+          // Find and update corresponding desktop row
+          const cardIndex = Array.from(document.querySelectorAll('.function-card')).indexOf(currentCard);
+          const desktopRows = document.querySelectorAll('#functionRows tr');
+
+          if (desktopRows[cardIndex]) {
+            // Sync the dropdown selection
+            const desktopSelect = desktopRows[cardIndex].querySelector(`[name="${fieldName}"]`);
+            if (desktopSelect) {
+              desktopSelect.value = e.target.value;
+            }
+
+            // Update desktop datetime
+            const desktopDateInput = desktopRows[cardIndex].querySelector(".datetimepicker");
+            setDateWithTime(desktopDateInput);
+          }
+
+        } else if (currentRow) {
+          // Update desktop row datetime
+          const desktopDateInput = currentRow.querySelector(".datetimepicker");
+          setDateWithTime(desktopDateInput);
+
+          // Find and update corresponding mobile card
+          const rowIndex = Array.from(document.querySelectorAll('#functionRows tr')).indexOf(currentRow);
+          const mobileCards = document.querySelectorAll('.function-card');
+
+          if (mobileCards[rowIndex]) {
+            // Sync the dropdown selection
+            const mobileSelect = mobileCards[rowIndex].querySelector(`[name="${fieldName}"]`);
+            if (mobileSelect) {
+              mobileSelect.value = e.target.value;
+            }
+
+            // Update mobile datetime
+            const mobileDateInput = mobileCards[rowIndex].querySelector(".datetimepicker");
+            setDateWithTime(mobileDateInput);
+          }
         }
       }
     }

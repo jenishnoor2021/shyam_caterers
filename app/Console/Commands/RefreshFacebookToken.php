@@ -28,7 +28,7 @@ class RefreshFacebookToken extends Command
           'fb_exchange_token' => $company->fb_access_token,
         ]);
 
-        // Log::info('FB Token Refresh Response:', $response->json());
+        Log::info('FB Token Refresh Response:', $response->json());
 
         if ($response->successful()) {
           $data = $response->json();
@@ -44,12 +44,15 @@ class RefreshFacebookToken extends Command
           $this->info("✅ Token refreshed for company ID: {$company->id}");
         } else {
           $this->error("❌ Failed to refresh token for company ID: {$company->id}");
+          Log::info('else Failed to refresh token for company ID');
         }
       } else {
         $this->info("ℹ️ Token still valid for company ID: {$company->id}");
+        Log::info('else Only refresh if expires in ≤10 days');
       }
     } else {
       $this->info("ℹ️ No company with fb_access_token found");
+      Log::info('FB Token Refresh else condition last:');
     }
   }
 }

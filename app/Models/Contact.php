@@ -17,10 +17,10 @@ class Contact extends Model
     {
         parent::boot();
 
-        // static::created(function ($item) {
+        static::created(function ($item) {
 
-        //     $adminEmail = "jenish.noor2021@gmail.com";
-        //     Mail::to($adminEmail)->send(new ContactMail($item));
-        // });
+            $adminEmail = "shyamcatererssurat@gmail.com";
+            Mail::to($adminEmail)->send(new ContactMail($item));
+        });
     }
 }

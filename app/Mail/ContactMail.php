@@ -30,6 +30,6 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Jyotish Dwaar - ')->view('emails.contact');
+        return $this->subject('New Contact Added')->view('emails.contact');
     }
 }

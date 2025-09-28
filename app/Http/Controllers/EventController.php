@@ -79,24 +79,19 @@ class EventController extends Controller
         $booking->status = 'Pending';
         $booking->save();
 
-        // $message = "Hello {$validated['customer_name']}, your booking has been created successfully for {$validated['event_type']} on {$validated['event_date']}.";
-        // $whatsappNumber = '91' . $validated['customer_mobile'];
-        // $whatsappNumber = '919913861160';
-        // $whatsappLink = "https://wa.me/{$whatsappNumber}?text=" . urlencode($message);
+        // $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
 
-        $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
+        // $body = "New Booking Form Submission\n\n" .
+        //     "Name: {$request->customer_name}\n" .
+        //     "Event: {$request->event}";
 
-        $body = "New Booking Form Submission\n\n" .
-            "Name: {$request->customer_name}\n" .
-            "Event: {$request->event}";
-
-        $twilio->messages->create(
-            env('OWNER_WHATSAPP'), // Owner's WhatsApp number
-            [
-                "from" => env('TWILIO_WHATSAPP_FROM'),
-                "body" => $body
-            ]
-        );
+        // $twilio->messages->create(
+        //     env('OWNER_WHATSAPP'), // Owner's WhatsApp number
+        //     [
+        //         "from" => env('TWILIO_WHATSAPP_FROM'),
+        //         "body" => $body
+        //     ]
+        // );
 
         return redirect()->route('bookings.edit', $booking->id)
             ->with('success', 'Booking created successfully.');

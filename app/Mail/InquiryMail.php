@@ -30,6 +30,6 @@ class InquiryMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Inquiry Jyotish - ')->view('emails.inquiry');
+        return $this->subject('New Booking Added')->view('emails.inquiry');
     }
 }

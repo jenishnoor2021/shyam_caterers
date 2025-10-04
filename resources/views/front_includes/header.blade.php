@@ -40,7 +40,7 @@
                                     <li class="{{ Request::is('cuisine_videos') ? 'current' : '' }}"><a href="{{ URL::to('/cuisine_videos') }}">Cuisine Videos</a></li>
                                 </ul>
                             </li>
-                            <!-- <li class="{{ Request::is('gallerys') ? 'current' : '' }}"><a href="{{ URL::to('/gallerys') }}">Gallery</a></li> -->
+                            <!--<li class="{{ Request::is('gallerys') ? 'current' : '' }}"><a href="{{ URL::to('/gallerys') }}">Gallery</a></li>-->
                             <li class="{{ Request::is('packages') ? 'current' : '' }}"><a href="{{ URL::to('/packages') }}">Packages</a></li>
                             <li class="{{ Request::is('contact') ? 'current' : '' }}"><a href="{{ URL::to('/contact') }}">Contact</a></li>
 

@@ -1,4 +1,4 @@
-<div class="single-img--carousel owl-carousel">
+<div class="single-img--carousel owl-carousel owl-theme">
   <div class="item">
     <img src="{{asset('front_assets/images/slider/0001.jpg')}}">
   </div>

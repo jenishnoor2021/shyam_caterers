@@ -221,13 +221,13 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
         <div class="row clearfix alternate">
             <!--Col-->
             <div class="content-col5 col-xl-6 col-lg-6 col-md-12 col-sm-12">
-
+                
                 <div class="clearfix wow fadeInRight innerAchieve" data-wow-duration="1500ms" data-wow-delay="0ms">
                     <div class="content-box">
                         <div class="title-box centered">
 
-                            <h1 class="founder-heading">Founder</h1>
-                            <div class="pattern-image1" style="margin: 0 auto;">
+                            <h1 class="founder-heading mobile-hidden">Founder</h1>
+                            <div class="pattern-image1 mobile-hidden" style="margin: 0 auto;">
                                 <img src="{{asset('front_assets/images/icons/separator.svg')}}" alt="" title="" loading="lazy">
                             </div>
                             <h3 class="founder-name" style="margin: 0;margin-top:10px;">Arjanbhai Shingala</h3>
@@ -247,6 +247,12 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
 
             <!--Col-->
             <div class="image-col col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                <div class="title-box centered">
+                    <h1 class="founder-heading desktop-hidden">Founder</h1>
+                    <div class="pattern-image1 desktop-hidden" style="margin: 0 auto;">
+                        <img src="{{asset('front_assets/images/icons/separator.svg')}}" alt="" title="" loading="lazy">
+                    </div>
+                </div>
                 <div class="inner wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="0ms">
                     <div class="image-layer2" style="background-image: url({{ asset('front_assets/images/resource/founder-1.jpeg') }})"></div>
                     <div class="image">
@@ -506,10 +512,8 @@ $imageToUse = file_exists(public_path($defaultPath)) ? $defaultPath : $defaultPa
                     loop: true,
                     margin: 10,
                     autoplay: true,
-                    navText: [
-                        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>`,
-                        `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`
-                    ],
+                    nav: true,
+                    navText: [ '<span class="icon fa-light fa-angle-left"></span>', '<span class="icon fa-light fa-angle-right"></span>' ],
                     dots: true,
                     autoplay: true,
                     autoplayTimeout: 3000,

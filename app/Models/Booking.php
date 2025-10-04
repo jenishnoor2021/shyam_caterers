@@ -17,7 +17,7 @@ class Booking extends Model
     {
         return $this->belongsTo(EventType::class, 'event_type');
     }
-
+    
     public static function boot()
     {
         parent::boot();

@@ -39,8 +39,10 @@
     $(document).ready(function() {
         $(".gallery-carousel").owlCarousel({
             items: 3,
-            loop: true,
+            loop: false,
             margin: 10,
+            nav: true, 
+            navText: [ '<span class="icon fa-light fa-angle-left"></span>', '<span class="icon fa-light fa-angle-right"></span>' ],
             autoplay: true,
             autoplayTimeout: 3000,
             autoplayHoverPause: true,
@@ -52,7 +54,7 @@
                     items: 2,
                 },
                 1000: {
-                    items: 3,
+                    items: 2,
                 },
             },
         });

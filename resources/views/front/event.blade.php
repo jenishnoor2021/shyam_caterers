@@ -79,19 +79,27 @@ $imageToUse = (!empty($backgroundPath) && file_exists(public_path($backgroundPat
                 </div>
                 @empty
                 <!-- Fallback Default Images -->
-                <div class="col-md-4">
-                    <img src="{{ asset('assets/defaults/default1.jpg') }}" class="img-fluid rounded" alt="Default" loading="lazy">>
+                <div class="">
+                    <img src="{{ asset('defaults/event_default.jpg') }}" class="img-fluid rounded" alt="Default" loading="lazy">
                 </div>
-                <div class="col-md-4">
-                    <img src="{{ asset('assets/defaults/default2.jpg') }}" class="img-fluid rounded" alt="Default" loading="lazy">>
+                <div class="">
+                    <img src="{{ asset('defaults/event_default.jpg') }}" class="img-fluid rounded" alt="Default" loading="lazy">
                 </div>
-                <div class="col-md-4">
-                    <img src="{{ asset('assets/defaults/default3.jpg') }}" class="img-fluid rounded" alt="Default" loading="lazy">>
+                <div class="">
+                    <img src="{{ asset('defaults/event_default.jpg') }}" class="img-fluid rounded" alt="Default" loading="lazy">
                 </div>
                 @endforelse
             </div>
         </div>
     </div>
 </section>
+<style>
+    .image-gallery .owl-nav button {
+        color: var(--black-color) !important;
+    }
+    .image-gallery .owl-nav button:before {
+        background: var(--main-color) !important;
+    }
+</style>
 
 @endsection

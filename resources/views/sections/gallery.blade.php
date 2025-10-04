@@ -2,7 +2,7 @@
 <section class="team-section">
     <div class="left-bot-bg"><img src="{{ asset('front_assets/images/background/bg-1.png') }}" alt="" title="" loading="lazy"></div>
     <div class="right-top-bg"><img src="{{ asset('front_assets/images/background/bg-6.png') }}" alt="" title="" loading="lazy"></div>
-    <div class="auto-container">
+    <div class="auto-container" style="max-width:80%;">
         <h2 class="team-heading" style="padding: 20px;">Our Gallery</h2>
         <div class="owl-carousel gallery-carousel owl-theme">
             @foreach ($images as $image)

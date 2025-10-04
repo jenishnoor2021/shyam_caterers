@@ -76,12 +76,12 @@
                 </a>
             </li>
 
-            <!-- <li>
-                <a href="/admin/reel" class="waves-effect">
-                    <i class="bx bx-home-circle"></i>
-                    <span key="t-chat">Reels</span>
-                </a>
-            </li> -->
+            <!--<li>-->
+            <!--    <a href="/admin/reel" class="waves-effect">-->
+            <!--        <i class="bx bx-home-circle"></i>-->
+            <!--        <span key="t-chat">Reels</span>-->
+            <!--    </a>-->
+            <!--</li>-->
 
             <li>
                 <a href="/admin/cuisine_category" class="waves-effect">
@@ -110,7 +110,7 @@
                     <span key="t-chat">Inquiry</span>
                 </a>
             </li>
-
+            
             <li>
                 <a href="/admin/video" class="waves-effect">
                     <i class="bx bx-home-circle"></i>

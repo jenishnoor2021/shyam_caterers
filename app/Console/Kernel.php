@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -20,7 +21,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('facebook:refresh-token')->daily();
+        Log::info('Before run schedule');
+        // $schedule->command('facebook:refresh-token')->everyMinute();
         $schedule->command('facebook:refresh-token')->twiceDaily(0, 12);
     }
 

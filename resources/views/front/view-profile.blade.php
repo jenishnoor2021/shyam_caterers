@@ -19,7 +19,7 @@
     <link rel="icon" type="image/png" sizes="16x16"
       href="{{ asset('assets/profile/images/favicons/favicon-16x16.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Akshay Kumar</title>
+    <title>{{$user->name}}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link href="{{ asset('assets/profile/css/profile.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/profile/css/profile_modal.css') }}" rel="stylesheet" type="text/css">
@@ -1222,7 +1222,7 @@
             </a>
           </div>
           <div class="mt-10 bg-[#282531] p-4 rounded-lg">
-            <p class="font-bold text-white text-sm mb-3">Have a question?</p>
+            <p class="font-bold text-white text-sm mb-3">For Booking Inquiry</p>
 
 
             @if (session()->has('success'))
@@ -1319,6 +1319,16 @@
       <!-- footer section (bnts)  -->
     </div>
   </div>
+  
+  <div class="w-[100%] lg:w-[30%] md:w-[90%] bottom-sticky-button">
+    <div class="relative">
+      <div class="w-[90%] lg:w-[90%] md:w-[90%] m-auto">
+        <a type="button" onclick="downloadVCard(this)"
+          href="{{ url('/mycard/'. $user->slug .'/generateVCard') }}"
+          class="text-center w-full border-1 border-gray-300 bg-white save-contact-btn">Save Contact</a>
+      </div>
+    </div>
+  </div>
 
   <script>
     document.getElementById('eventSelect').addEventListener('change', function() {
@@ -1343,6 +1353,15 @@
       submitBtn.style.display = "none";
       spinner.style.display = "block";
     });
+    
+    function downloadVCard(ele) {
+        setTimeout(function() {
+            $(ele).html('<i class="fas fa-circle-notch fa-spin"></i>');
+        }, 0);
+        setTimeout(function() {
+            $(ele).html("Save Contact");
+        }, 500);
+    }
 
     var isAndroid = "";
     var isIOS = "";

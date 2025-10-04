@@ -5,7 +5,7 @@
     @include('front_includes.head')
 
     @yield('page_style')
-
+    
     <style>
         #instagram_icon {
             bottom: 150px;
@@ -35,15 +35,19 @@
 
         <!-- Page Loader -->
         <div class="loader-mask">
-            <div class="loader">
-                <div class="round_loader_block">
-                    <span class="round_loader"></span>
+            <!--<div class="loader">-->
+            <!--    <div class="round_loader_block">-->
+            <!--        <span class="round_loader"></span>-->
 
-                    <img src="{{ asset('front_assets/images/logo.png') }}" alt="Loader_Logo" class="loader_logo" loading="lazy">
-                </div>
+            <!--        <img src="{{ asset('front_assets/images/logo.png') }}" alt="Loader_Logo" class="loader_logo" loading="lazy">-->
+            <!--    </div>-->
 
-                <span class="text_loader" style="font-size: 25px !important;">SHYAM CATERERS</span>
-            </div>
+            <!--    <span class="text_loader" style="font-size: 25px !important;">SHYAM CATERERS</span>-->
+            <!--</div>-->
+            <video width="100%" height="100%" autoplay muted loop playsinline style="background:#000;">
+                <source src="{{ asset('front_assets/images/logo.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>  
         </div>
 
         <!-- Preloader -->
@@ -141,7 +145,7 @@
     <a href="https://wa.me/+91{{ $surat_contact }}" target="_blank" id="whatsapp_icon">
         <img src="{{asset('front_assets/images/whatsapp.png')}}" alt="whatsapp-img">
     </a>
-
+    
     <a href="{{$instagram}}" target="_blank" id="instagram_icon">
         <img src="{{asset('front_assets/images/Instagram.png')}}" alt="whatsapp-img">
     </a>
@@ -170,7 +174,7 @@
     <script src="{{ asset('front_assets/js/wow.js') }}"></script>
     <script src="{{ asset('front_assets/js/parallax.min.js') }}"></script>
     <script src="{{ asset('front_assets/js/custom-script.js') }}"></script>
-
+    
     <script>
         // window.addEventListener('load', function() {
         //     const loader = document.querySelector('.loader-mask');
@@ -183,10 +187,10 @@
         //         document.body.classList.remove('hidden');
         //     }, 1000); // after transition
         // });
-
+        
         window.addEventListener("load", () => {
-            document.body.classList.remove("loading");
-            document.querySelector(".loader-mask").style.display = "none";
+          document.body.classList.remove("loading");
+          document.querySelector(".loader-mask").style.display = "none";
         });
     </script>
     @yield('page_script')

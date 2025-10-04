@@ -44,20 +44,20 @@
             <div class="footer-col links-col col-lg-3 col-md-6 col-sm-12">
                 <div class="inner wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
                     <ul class="links">
-                        <li class="{{ Request::is('/') ? 'current' : '' }}"><a href="{{ URL::to('/') }}">Home</a></li>
-                        <li class="{{ Request::is('about') ? 'current' : '' }}"><a href="{{ URL::to('/about') }}">About Us</a></li>
-                        <li class="{{ Request::is('gallerys') ? 'current' : '' }}"><a href="{{ URL::to('/gallerys') }}">Gallery</a></li>
-                        <li class="{{ Request::is('contact') ? 'current' : '' }}"><a href="{{ URL::to('/contact') }}">Contact</a></li>
+                        <li class="{{ Request::is('/') ? 'current' : '' }}"><a href="{{ URL::to('/') }}"><i class="fa-light fa-chevron-right"></i>Home</a></li>
+                        <li class="{{ Request::is('about') ? 'current' : '' }}"><a href="{{ URL::to('/about') }}"><i class="fa-light fa-chevron-right"></i>About Us</a></li>
+                        <li class="{{ Request::is('gallerys') ? 'current' : '' }}"><a href="{{ URL::to('/gallerys') }}"><i class="fa-light fa-chevron-right"></i>Gallery</a></li>
+                        <li class="{{ Request::is('contact') ? 'current' : '' }}"><a href="{{ URL::to('/contact') }}"><i class="fa-light fa-chevron-right"></i>Contact</a></li>
                     </ul>
                 </div>
             </div>
             <!--Footer Col-->
             <div class="footer-col links-col last col-lg-3 col-md-6 col-sm-12">
                 <div class="inner wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-                    <ul class="links">
-                        <li><a href="{{$facebook}}" target="_blank">facebook</a></li>
-                        <li><a href="{{$instagram}}" target="_blank">instagram</a></li>
-
+                    <ul class="links social-links">
+                        <li><a href="{{$facebook}}" target="_blank"><i class="fa-brands fa-facebook"></i>facebook</a></li>
+                        <li><a href="{{$instagram}}" target="_blank"><i class="fa-brands fa-instagram"></i>instagram</a></li>
+                        <li><a href="https://g.page/r/CUZpNauyDYj1EBM/review" target="_blank"><i class="fa-brands fa-google"></i>Google Reviews</a></li>
                     </ul>
                 </div>
             </div>

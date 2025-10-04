@@ -122,7 +122,7 @@ class AdminController extends Controller
         $dishes = Dishe::where('is_active', 1)->inRandomOrder()->take(3)->get();
         return view('front.index', compact('slider', 'dishes', 'eventTypes'));
     }
-
+    
     public function loadReels()
     {
         // $accessToken = config('services.instagram.token');
@@ -175,7 +175,7 @@ class AdminController extends Controller
 
         return view('front.gallery', compact('eventGalleries'));
     }
-
+    
     public function videos()
     {
         $videos = Video::where('is_active', 1)->get();
@@ -204,76 +204,16 @@ class AdminController extends Controller
         return view('front.cuisine', compact('cuisine'));
     }
 
-    public function packages()
-    {
-        return view('front.packages');
-    }
-
     public function contact()
     {
         $events = EventType::orderBy('event_name', 'ASC')->get();
         return view('front.contact', compact('events'));
     }
-
-    // public function storeContact(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'name' => 'required',
-    //         'email' => 'required',
-    //         'contact' => 'required',
-    //         'event' => 'required',
-    //         'event_date' => 'required',
-    //         'address' => 'required',
-    //         'venu' => 'required',
-    //         // 'message' => 'required',
-    //         'other_event' => 'required_if:event,other'
-    //     ]);
-
-    //     // Honeypot check
-    //     if (!empty($request->website)) {
-    //         return back()->withErrors(['error' => 'Bot detected'])->withInput();
-    //     }
-
-    //     if ($validator->fails()) {
-    //         return Redirect::back()->withInput($request->all())->withErrors($validator);
-    //     }
-
-    //     // if user selected "Other", replace event with other_event input
-    //     $eventValue = $request->event === 'other' ? $request->other_event : $request->event;
-
-    //     // dd($request->all());
-
-    //     // $input = $request->all();
-    //     $input = $request->except(['website']);
-    //     $input['event'] = $eventValue; // overwrite event value
-    //     unset($input['other_event']);  // remove extra field
-    //     Contact::create($input);
-
-    //     try {
-    //         $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
-
-    //         $body = "New Contact Form Submission\n\n" .
-    //             "Name: {$request->name}\n" .
-    //             "Contact: {$request->contact}\n";
-    //         // "Event: {$request->event}";
-
-    //         $twilio->messages->create(
-    //             env('OWNER_WHATSAPP'),
-    //             [
-    //                 "from" => env('TWILIO_WHATSAPP_FROM'),
-    //                 "body" => $body
-    //             ]
-    //         );
-    //     } catch (Exception $e) {
-    //         // Log the error for debugging
-    //         Log::error('Twilio send error: ' . $e->getMessage());
-
-    //         // Optional: Notify admin or display friendly message
-    //         // return redirect()->back()->with("warning", "Contact saved, but failed to send WhatsApp notification.");
-    //     }
-
-    //     return redirect()->back()->with("success", "Contact request send successfully!");
-    // }
+    
+    public function packages()
+    {
+        return view('front.packages');
+    }
 
     public function storeContact(Request $request)
     {
@@ -301,55 +241,40 @@ class AdminController extends Controller
         // if user selected "Other", replace event with other_event input
         $eventValue = $request->event === 'other' ? $request->other_event : $request->event;
 
+        // dd($request->all());
+
+        // $input = $request->all();
         $input = $request->except(['website']);
         $input['event'] = $eventValue; // overwrite event value
         unset($input['other_event']);  // remove extra field
         Contact::create($input);
 
-        // ✅ WhatsApp API (wapi.co.in) Integration
         // try {
-        //     $authKey = "SHYAMCATERESXX1D"; // your API key
-        //     $mobileNumber = "918128737020"; // can be comma separated
+        //     $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
 
-        //     $url = "https://wapi.co.in/sendMessage.php";
-
-        //     $message = "New Contact Form Submission\n\n" .
+        //     $body = "New Contact Form Submission\n\n" .
         //         "Name: {$request->name}\n" .
         //         "Contact: {$request->contact}\n";
+        //         // "Event: {$request->event}";
 
-        //     $postData = [
-        //         'AUTH_KEY' => $authKey,
-        //         'phone'    => $mobileNumber,
-        //         'message'  => $message,
-        //     ];
+        //     $twilio->messages->create(
+        //         env('OWNER_WHATSAPP'),
+        //         [
+        //             "from" => env('TWILIO_WHATSAPP_FROM'),
+        //             "body" => $body
+        //         ]
+        //     );
+        // } catch (Exception $e) {
+        //     // Log the error for debugging
+        //     Log::error('Twilio send error: ' . $e->getMessage());
 
-        //     $ch = curl_init();
-        //     curl_setopt_array($ch, [
-        //         CURLOPT_URL => $url,
-        //         CURLOPT_RETURNTRANSFER => true,
-        //         CURLOPT_POST => true,
-        //         CURLOPT_POSTFIELDS => $postData,
-        //         CURLOPT_SSL_VERIFYHOST => 0,
-        //         CURLOPT_SSL_VERIFYPEER => 0,
-        //         CURLOPT_CONNECTTIMEOUT => 10, // max 10 sec to connect
-        //         CURLOPT_TIMEOUT => 15,        // max 15 sec to finish request
-        //     ]);
-
-        //     $output = curl_exec($ch);
-
-        //     if (curl_errno($ch)) {
-        //         Log::error('WhatsApp API Error: ' . curl_error($ch));
-        //     }
-        //     curl_close($ch);
-
-        //     Log::info('WhatsApp API Response: ' . $output);
-        // } catch (\Exception $e) {
-        //     Log::error('WhatsApp send error: ' . $e->getMessage());
+        //     // Optional: Notify admin or display friendly message
+        //     // return redirect()->back()->with("warning", "Contact saved, but failed to send WhatsApp notification.");
         // }
 
-        return redirect()->back()->with("success", "Contact request sent successfully!");
+        return redirect()->back()->with("success", "Contact request send successfully!");
     }
-
+    
     public function openUrl($slug)
     {
         $user = Profile::where(['slug' => $slug])->first();
@@ -363,6 +288,60 @@ class AdminController extends Controller
 
         $events = EventType::orderBy('event_name', 'ASC')->get();
         return view('front.view-profile', compact('user', 'events'));
+    }
+    
+    public function generateVCard($slug)
+    {
+        // Example: fetch user from DB
+        $user = Profile::where(['slug' => $slug])->first();
+
+        // Build vCard dynamically
+        $vcard = "BEGIN:VCARD\n";
+        $vcard .= "VERSION:3.0\n";
+        $vcard .= "REV:" . now()->format('Y-m-d\TH:i:s\Z') . "\n"; // auto timestamp
+        $vcard .= "N;CHARSET=utf-8:;{$user->name};;;\n";
+        $vcard .= "FN;CHARSET=utf-8:{$user->name}\n";
+        $vcard .= "TITLE;CHARSET=utf-8:👑 The King Of Catering Services 👑\n";
+
+        if ($user->address) {
+            $vcard .= "ADR;WORK;POSTAL;CHARSET=utf-8:;;;"
+                    . ($user->address ?? '') . ";\n";
+        }
+
+        if ($user->contact) {
+            $vcard .= "TEL:{$user->contact}\n";
+        }
+
+        if ($user->website) {
+            $vcard .= "URL;TYPE=website:{$user->website}\n";
+        }
+        if ($user->youtube) {
+            $vcard .= "URL;TYPE=youtube:{$user->youtube}\n";
+        }
+        if ($user->facebook) {
+            $vcard .= "URL;TYPE=facebook:{$user->facebook}\n";
+        }
+        if ($user->map) {
+            $vcard .= "URL;TYPE=location:{$user->map}\n";
+        }
+        if ($user->whatsapp_no) {
+            $vcard .= "URL;TYPE=whatsapp:wa.me/{$user->whatsapp_no}\n";
+        }
+        if ($user->instagram) {
+            $vcard .= "URL;TYPE=instagram:{$user->instagram}\n";
+        }
+        if ($user->google_review) {
+            $vcard .= "URL;TYPE=Google Review:https://g.page/r/CUZpNauyDYj1EBM/review\n";
+        }
+
+        $vcard .= "END:VCARD\n";
+
+        // Dynamic filename e.g. "Akshay-Kumar.vcf"
+        $fileName = str_replace(' ', '-', $user->name) . ".vcf";
+
+        return response($vcard)
+            ->header('Content-Type', 'text/vcard; charset=utf-8')
+            ->header('Content-Disposition', 'attachment; filename="'.$fileName.'"');
     }
 
     /**

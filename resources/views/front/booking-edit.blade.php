@@ -571,80 +571,222 @@
   }
 
   // Dropdown change
-  document.addEventListener("change", function(e) {
+//   document.addEventListener("change", function(e) {
+//     if (e.target.classList.contains("function-select")) {
+//       const selected = e.target.options[e.target.selectedIndex];
+//       const defaultTime = selected.getAttribute("data-time");
+
+//       if (defaultTime && e.target.value) {
+//         const fieldName = e.target.name;
+//         let currentCard = null;
+//         let currentRow = null;
+
+//         // Determine if this change is from mobile or desktop
+//         if (e.target.closest('.function-card')) {
+//           currentCard = e.target.closest('.function-card');
+//         } else if (e.target.closest('#functionRows')) {
+//           currentRow = e.target.closest('tr');
+//         }
+
+//         // Function to set date with time
+//         const setDateWithTime = (datetimeInput) => {
+//           if (datetimeInput && datetimeInput._flatpickr) {
+//             let currentDate = datetimeInput._flatpickr.selectedDates[0] || new Date();
+//             let yyyy = currentDate.getFullYear();
+//             let mm = String(currentDate.getMonth() + 1).padStart(2, "0");
+//             let dd = String(currentDate.getDate()).padStart(2, "0");
+//             let dateTimeString = `${yyyy}-${mm}-${dd} ${defaultTime}`;
+
+//             datetimeInput._flatpickr.setDate(dateTimeString, true, "Y-m-d h:i K");
+//           }
+//         };
+
+//         if (currentCard) {
+//           // Update mobile card datetime
+//           const mobileDateInput = currentCard.querySelector(".datetimepicker");
+//           setDateWithTime(mobileDateInput);
+
+//           // Find and update corresponding desktop row
+//           const cardIndex = Array.from(document.querySelectorAll('.function-card')).indexOf(currentCard);
+//           const desktopRows = document.querySelectorAll('#functionRows tr');
+
+//           if (desktopRows[cardIndex]) {
+//             // Sync the dropdown selection
+//             const desktopSelect = desktopRows[cardIndex].querySelector(`[name="${fieldName}"]`);
+//             if (desktopSelect) {
+//               desktopSelect.value = e.target.value;
+//             }
+
+//             // Update desktop datetime
+//             const desktopDateInput = desktopRows[cardIndex].querySelector(".datetimepicker");
+//             setDateWithTime(desktopDateInput);
+//           }
+
+//         } else if (currentRow) {
+//           // Update desktop row datetime
+//           const desktopDateInput = currentRow.querySelector(".datetimepicker");
+//           setDateWithTime(desktopDateInput);
+
+//           // Find and update corresponding mobile card
+//           const rowIndex = Array.from(document.querySelectorAll('#functionRows tr')).indexOf(currentRow);
+//           const mobileCards = document.querySelectorAll('.function-card');
+
+//           if (mobileCards[rowIndex]) {
+//             // Sync the dropdown selection
+//             const mobileSelect = mobileCards[rowIndex].querySelector(`[name="${fieldName}"]`);
+//             if (mobileSelect) {
+//               mobileSelect.value = e.target.value;
+//             }
+
+//             // Update mobile datetime
+//             const mobileDateInput = mobileCards[rowIndex].querySelector(".datetimepicker");
+//             setDateWithTime(mobileDateInput);
+//           }
+//         }
+//       }
+//     }
+//   });
+
+
+document.addEventListener("change", function(e) {
     if (e.target.classList.contains("function-select")) {
-      const selected = e.target.options[e.target.selectedIndex];
-      const defaultTime = selected.getAttribute("data-time");
+        const selected = e.target.options[e.target.selectedIndex];
+        const defaultTime = selected.getAttribute("data-time");
 
-      if (defaultTime && e.target.value) {
-        const fieldName = e.target.name;
-        let currentCard = null;
-        let currentRow = null;
+        if (defaultTime && e.target.value) {
+            const fieldName = e.target.name;
 
-        // Determine if this change is from mobile or desktop
-        if (e.target.closest('.function-card')) {
-          currentCard = e.target.closest('.function-card');
-        } else if (e.target.closest('#functionRows')) {
-          currentRow = e.target.closest('tr');
-        }
+            // Find the datetime input in the same row/card
+            let datetimeInput = null;
+            let functionWrapper = null;
 
-        // Function to set date with time
-        const setDateWithTime = (datetimeInput) => {
-          if (datetimeInput && datetimeInput._flatpickr) {
-            let currentDate = datetimeInput._flatpickr.selectedDates[0] || new Date();
-            let yyyy = currentDate.getFullYear();
-            let mm = String(currentDate.getMonth() + 1).padStart(2, "0");
-            let dd = String(currentDate.getDate()).padStart(2, "0");
-            let dateTimeString = `${yyyy}-${mm}-${dd} ${defaultTime}`;
 
-            datetimeInput._flatpickr.setDate(dateTimeString, true, "Y-m-d h:i K");
-          }
-        };
-
-        if (currentCard) {
-          // Update mobile card datetime
-          const mobileDateInput = currentCard.querySelector(".datetimepicker");
-          setDateWithTime(mobileDateInput);
-
-          // Find and update corresponding desktop row
-          const cardIndex = Array.from(document.querySelectorAll('.function-card')).indexOf(currentCard);
-          const desktopRows = document.querySelectorAll('#functionRows tr');
-
-          if (desktopRows[cardIndex]) {
-            // Sync the dropdown selection
-            const desktopSelect = desktopRows[cardIndex].querySelector(`[name="${fieldName}"]`);
-            if (desktopSelect) {
-              desktopSelect.value = e.target.value;
+            // Determine if this change is from mobile or desktop
+            if (e.target.closest('.function-card')) {
+                // Mobile card - find the parent column of function dropdown
+                functionWrapper = e.target.closest('.col-12.mb-3');
+                datetimeInput = e.target.closest('.function-card').querySelector(".datetimepicker");
+            } else if (e.target.closest('#functionRows')) {
+                // Desktop row - find the td containing function dropdown
+                functionWrapper = e.target.closest('td');
+                datetimeInput = e.target.closest('tr').querySelector(".datetimepicker");
             }
 
-            // Update desktop datetime
-            const desktopDateInput = desktopRows[cardIndex].querySelector(".datetimepicker");
-            setDateWithTime(desktopDateInput);
-          }
+            // SHOW FEEDBACK FIRST (before setting time)
+            if (datetimeInput && functionWrapper) {
 
-        } else if (currentRow) {
-          // Update desktop row datetime
-          const desktopDateInput = currentRow.querySelector(".datetimepicker");
-          setDateWithTime(desktopDateInput);
+                // Disable dropdown immediately
+                e.target.disabled = true;
+                e.target.style.opacity = '0.6';
 
-          // Find and update corresponding mobile card
-          const rowIndex = Array.from(document.querySelectorAll('#functionRows tr')).indexOf(currentRow);
-          const mobileCards = document.querySelectorAll('.function-card');
+                // Create loading indicator BELOW function dropdown
+                const loadingSpinner = document.createElement('div');
+                loadingSpinner.className = 'datetime-loading-indicator';
+                loadingSpinner.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Setting time...';
+                loadingSpinner.style.cssText =
+                    'color: #856404; font-size: 12px; margin-top: 5px; font-weight: 500;';
 
-          if (mobileCards[rowIndex]) {
-            // Sync the dropdown selection
-            const mobileSelect = mobileCards[rowIndex].querySelector(`[name="${fieldName}"]`);
-            if (mobileSelect) {
-              mobileSelect.value = e.target.value;
+                // Add loading indicator below the function dropdown
+                functionWrapper.appendChild(loadingSpinner);
+
+                // Disable datetime input
+                datetimeInput.disabled = true;
+                datetimeInput.style.opacity = '0.6';
+
+                // Store reference to the dropdown for later re-enabling
+                const dropdown = e.target;
+
+                // Function to restore UI - guaranteed to run
+                const restoreUI = () => {
+                    datetimeInput.style.opacity = '';
+                    datetimeInput.disabled = false;
+                    dropdown.disabled = false;
+                    dropdown.style.opacity = '1';
+
+                    // Remove loading indicator
+                    if (loadingSpinner && loadingSpinner.parentNode) {
+                        loadingSpinner.remove();
+                    }
+                };
+
+                // Use setTimeout to allow UI to update before heavy operation
+                setTimeout(() => {
+                    try {
+                        // NOW set the time (this is the slow part)
+                        if (datetimeInput._flatpickr) {
+                            let currentDate = datetimeInput._flatpickr.selectedDates[0] ||
+                            new Date();
+                            let yyyy = currentDate.getFullYear();
+                            let mm = String(currentDate.getMonth() + 1).padStart(2, "0");
+                            let dd = String(currentDate.getDate()).padStart(2, "0");
+                            let dateTimeString = `${yyyy}-${mm}-${dd} ${defaultTime}`;
+
+                            datetimeInput._flatpickr.setDate(dateTimeString, true, "Y-m-d H:i");
+                        }
+
+                        // Sync to the other layout (mobile/desktop)
+                        let currentCard = dropdown.closest('.function-card');
+                        let currentRow = dropdown.closest('tr');
+
+                        if (currentCard) {
+                            const cardIndex = Array.from(document.querySelectorAll(
+                                '.function-card')).indexOf(currentCard);
+                            const desktopRows = document.querySelectorAll('#functionRows tr');
+
+                            if (desktopRows[cardIndex]) {
+                                const desktopSelect = desktopRows[cardIndex].querySelector(
+                                    `[name="${fieldName}"]`);
+                                if (desktopSelect) desktopSelect.value = dropdown.value;
+
+                                const desktopDateInput = desktopRows[cardIndex].querySelector(
+                                    ".datetimepicker");
+                                if (desktopDateInput && desktopDateInput._flatpickr) {
+                                    let currentDate = desktopDateInput._flatpickr.selectedDates[
+                                        0] || new Date();
+                                    let yyyy = currentDate.getFullYear();
+                                    let mm = String(currentDate.getMonth() + 1).padStart(2, "0");
+                                    let dd = String(currentDate.getDate()).padStart(2, "0");
+                                    let dateTimeString = `${yyyy}-${mm}-${dd} ${defaultTime}`;
+                                    desktopDateInput._flatpickr.setDate(dateTimeString, true,
+                                        "Y-m-d H:i");
+                                }
+                            }
+                        } else if (currentRow) {
+                            const rowIndex = Array.from(document.querySelectorAll(
+                                '#functionRows tr')).indexOf(currentRow);
+                            const mobileCards = document.querySelectorAll('.function-card');
+
+                            if (mobileCards[rowIndex]) {
+                                const mobileSelect = mobileCards[rowIndex].querySelector(
+                                    `[name="${fieldName}"]`);
+                                if (mobileSelect) mobileSelect.value = dropdown.value;
+
+                                const mobileDateInput = mobileCards[rowIndex].querySelector(
+                                    ".datetimepicker");
+                                if (mobileDateInput && mobileDateInput._flatpickr) {
+                                    let currentDate = mobileDateInput._flatpickr.selectedDates[0] ||
+                                        new Date();
+                                    let yyyy = currentDate.getFullYear();
+                                    let mm = String(currentDate.getMonth() + 1).padStart(2, "0");
+                                    let dd = String(currentDate.getDate()).padStart(2, "0");
+                                    let dateTimeString = `${yyyy}-${mm}-${dd} ${defaultTime}`;
+                                    mobileDateInput._flatpickr.setDate(dateTimeString, true,
+                                        "Y-m-d H:i");
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error setting datetime:', error);
+                    } finally {
+                        // ALWAYS restore UI, even if there's an error
+                        restoreUI();
+                    }
+
+                }, 50); // Small delay to let UI update before processing
             }
-
-            // Update mobile datetime
-            const mobileDateInput = mobileCards[rowIndex].querySelector(".datetimepicker");
-            setDateWithTime(mobileDateInput);
-          }
         }
-      }
     }
-  });
+});
+
 </script>
 @endsection

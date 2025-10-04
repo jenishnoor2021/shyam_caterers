@@ -181,6 +181,7 @@ if($('.main-header').length){
 		$('.dish-gallery-slider').owlCarousel({
 			loop:true,
 			margin:45,
+			items:3,
 			nav:true,
 			smartSpeed: 700,
 			autoplay: true,
@@ -202,7 +203,7 @@ if($('.main-header').length){
 					margin:30
 				},
 				1200:{
-					items:4
+					items:3
 				}
 			}
 		});    		

@@ -42,6 +42,17 @@
 
 <!--End Banner Section -->
 
+
+<!--<ins class="adsbygoogle"-->
+<!--     style="display:block"-->
+<!--     data-ad-client="ca-pub-2600387064208986"-->
+<!--     data-ad-slot="5176367379"-->
+<!--     data-ad-format="auto"-->
+<!--     data-full-width-responsive="true"></ins>-->
+<!--<script>-->
+<!--     (adsbygoogle = window.adsbygoogle || []).push({});-->
+<!--</script>-->
+
 <!--We Offer Section-->
 <section class="we-offer-section">
     <div class="left-bot-bg"><img src="{{ asset('front_assets/images/background/bg-1.png') }}" alt="" title="" loading="lazy"></div>
@@ -161,7 +172,7 @@
                 @foreach ($eventTypes as $index => $eventtype)
                 <div class="offer-block-two {{$index % 2 == 0 ? 'mt-3' : 'margin-top'}}">
                     <div class="inner-box">
-                        <div class="image"><a href="{{ route('site.event', $eventtype->id) }}"><img src="{{ asset($eventtype->file) }}" alt="" class="image{{$index % 2 == 0 ? '7' : '6'}}" loading="lazy"></a>
+                        <div class="image"><a href="{{ route('site.event', $eventtype->id) }}"><img src="{{ asset($eventtype->file) }}" alt="" class="image {{$index % 2 == 0 ? '7' : '6'}}" loading="lazy"></a>
                         </div>
                         <h4><a href="{{ route('site.event', $eventtype->id) }}">{{ $eventtype->event_type }}</a></h4>
                         <div class="text desc"><span class="para-color">{{ \Illuminate\Support\Str::limit($eventtype->detail, 100, '...') }}</span></div>
@@ -244,9 +255,11 @@
                 document.getElementById('gallery-content').innerHTML = html;
 
                 $(".gallery-carousel").owlCarousel({
-                    items: 3,
+                    items: 2,
                     loop: true,
                     margin: 10,
+                    nav:true,
+                    navText: [ '<span class="icon fa-light fa-angle-left"></span>', '<span class="icon fa-light fa-angle-right"></span>' ],
                     autoplay: true,
                     autoplayTimeout: 3000,
                     autoplayHoverPause: true,
@@ -258,7 +271,7 @@
                             items: 2,
                         },
                         1000: {
-                            items: 3,
+                            items: 2,
                         },
                     },
                 });

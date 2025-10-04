@@ -74,6 +74,14 @@ Route::get('/load-about-slider', function () {
     return view('sections.about-slider');
 });
 
+Route::get('/run-scheduler/{key}', function ($key) {
+    if ($key !== env('CRON_SECRET')) {
+        abort(403, 'Unauthorized');
+    }
+    Artisan::call('schedule:run');
+    return "Scheduler executed at " . now();
+});
+
 Route::post('/contactsFind', [EventController::class, 'contactsFind'])->name('contactsFind');
 Route::get('/booking', [EventController::class, 'bookingPage']);
 Route::get('/booking-form', [EventController::class, 'create']);
@@ -232,7 +240,7 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::patch('admin/cuisine_items/update/{id}', [AdminCuisineItemsController::class, 'update'])->name('admin.cuisine_items.update');
     Route::get('admin/cuisine_items/destroy/{id}', [AdminCuisineItemsController::class, 'destroy'])->name('admin.cuisine_items.destroy');
     Route::post("admin/cuisine_items/active", [AdminCuisineItemsController::class, 'statusUpdate'])->name('admin.cuisine_items.active');
-
+    
     Route::get("admin/video", [AdminVideoController::class, 'index'])->name('admin.video.index');
     Route::get('admin/video/create', [AdminVideoController::class, 'create'])->name('admin.video.create');
     Route::post('admin/video/store', [AdminVideoController::class, 'store'])->name('admin.video.store');
@@ -259,6 +267,7 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
 });
 
 Route::get('/{slug}', [AdminController::class, 'openUrl'])->name('open.url');
+Route::get('/mycard/{slug}/generateVCard', [AdminController::class, 'generateVCard']);
 
 //Clear Cache facade value:
 Route::get('/admin/clear-cache', function () {

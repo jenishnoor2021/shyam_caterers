@@ -79,6 +79,11 @@ class EventController extends Controller
         $booking->status = 'Pending';
         $booking->save();
 
+        // $message = "Hello {$validated['customer_name']}, your booking has been created successfully for {$validated['event_type']} on {$validated['event_date']}.";
+        // $whatsappNumber = '91' . $validated['customer_mobile'];
+        // $whatsappNumber = '919913861160';
+        // $whatsappLink = "https://wa.me/{$whatsappNumber}?text=" . urlencode($message);
+
         // $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
 
         // $body = "New Booking Form Submission\n\n" .

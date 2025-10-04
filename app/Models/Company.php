@@ -23,7 +23,7 @@ class Company extends Model
     {
         return $this->uploadlogo . $photo;
     }
-
+    
     protected $casts = [
         'fb_token_expires_at' => 'datetime',
     ];

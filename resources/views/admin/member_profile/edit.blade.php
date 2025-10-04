@@ -49,7 +49,7 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="slug">Slug<span class="text-danger">*</span></label>
-                            <input type="text" name="slug" class="form-control" id="slug" placeholder="Enter slug" value="{{ $profile->slug }}" required>
+                            <input type="text" name="slug" class="form-control" id="slug" placeholder="Enter slug" value="{{ $profile->slug }}" required readonly>
                             @if($errors->has('slug'))
                             <div class="error text-danger">{{ $errors->first('slug') }}</div>
                             @endif
@@ -70,7 +70,7 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="image">Profile Image<span class="text-danger">*</span></label>
-                            <input type="file" name="image" class="form-control" accept="image/*" id="image" required>
+                            <input type="file" name="image" class="form-control" accept="image/*" id="image">
                             <img src="{{ $profile->image }}" alt="Your image" width="50px" hight="50px" loading="lazy">
                             @if($errors->has('image'))
                             <div class="error text-danger">{{ $errors->first('image') }}</div>
@@ -80,7 +80,7 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="file">Image<span class="text-danger">*</span></label>
-                            <input type="file" name="file" class="form-control" accept="image/*" id="file" required>
+                            <input type="file" name="file" class="form-control" accept="image/*" id="file">
                             <img src="{{ $profile->file }}" alt="Your Logo" width="50px" hight="50px" loading="lazy">
                             @if($errors->has('file'))
                             <div class="error text-danger">{{ $errors->first('file') }}</div>

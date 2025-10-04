@@ -125,12 +125,12 @@
                 </a>
             </li>
 
-            <!-- <li>
+            <li>
                 <a href="/admin/profile" class="waves-effect">
                     <i class="bx bx-home-circle"></i>
                     <span key="t-chat">Profile</span>
                 </a>
-            </li> -->
+            </li>
 
             <!-- <li>
                 <a href="/admin/company" class="waves-effect">

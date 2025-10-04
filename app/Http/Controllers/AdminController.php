@@ -282,7 +282,7 @@ class AdminController extends Controller
             'email' => 'required',
             'contact' => 'required',
             'event' => 'required',
-            'event_date' => 'required',
+            // 'event_date' => 'required',
             'address' => 'required',
             'venu' => 'required',
             // 'message' => 'required',
@@ -307,45 +307,45 @@ class AdminController extends Controller
         Contact::create($input);
 
         // ✅ WhatsApp API (wapi.co.in) Integration
-        try {
-            $authKey = "SHYAMCATERESXX1D"; // your API key
-            $mobileNumber = "918128737020"; // can be comma separated
+        // try {
+        //     $authKey = "SHYAMCATERESXX1D"; // your API key
+        //     $mobileNumber = "918128737020"; // can be comma separated
 
-            $url = "https://wapi.co.in/sendMessage.php";
+        //     $url = "https://wapi.co.in/sendMessage.php";
 
-            $message = "New Contact Form Submission\n\n" .
-                "Name: {$request->name}\n" .
-                "Contact: {$request->contact}\n";
+        //     $message = "New Contact Form Submission\n\n" .
+        //         "Name: {$request->name}\n" .
+        //         "Contact: {$request->contact}\n";
 
-            $postData = [
-                'AUTH_KEY' => $authKey,
-                'phone'    => $mobileNumber,
-                'message'  => $message,
-            ];
+        //     $postData = [
+        //         'AUTH_KEY' => $authKey,
+        //         'phone'    => $mobileNumber,
+        //         'message'  => $message,
+        //     ];
 
-            $ch = curl_init();
-            curl_setopt_array($ch, [
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => $postData,
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
-                CURLOPT_CONNECTTIMEOUT => 10, // max 10 sec to connect
-                CURLOPT_TIMEOUT => 15,        // max 15 sec to finish request
-            ]);
+        //     $ch = curl_init();
+        //     curl_setopt_array($ch, [
+        //         CURLOPT_URL => $url,
+        //         CURLOPT_RETURNTRANSFER => true,
+        //         CURLOPT_POST => true,
+        //         CURLOPT_POSTFIELDS => $postData,
+        //         CURLOPT_SSL_VERIFYHOST => 0,
+        //         CURLOPT_SSL_VERIFYPEER => 0,
+        //         CURLOPT_CONNECTTIMEOUT => 10, // max 10 sec to connect
+        //         CURLOPT_TIMEOUT => 15,        // max 15 sec to finish request
+        //     ]);
 
-            $output = curl_exec($ch);
+        //     $output = curl_exec($ch);
 
-            if (curl_errno($ch)) {
-                Log::error('WhatsApp API Error: ' . curl_error($ch));
-            }
-            curl_close($ch);
+        //     if (curl_errno($ch)) {
+        //         Log::error('WhatsApp API Error: ' . curl_error($ch));
+        //     }
+        //     curl_close($ch);
 
-            Log::info('WhatsApp API Response: ' . $output);
-        } catch (\Exception $e) {
-            Log::error('WhatsApp send error: ' . $e->getMessage());
-        }
+        //     Log::info('WhatsApp API Response: ' . $output);
+        // } catch (\Exception $e) {
+        //     Log::error('WhatsApp send error: ' . $e->getMessage());
+        // }
 
         return redirect()->back()->with("success", "Contact request sent successfully!");
     }
@@ -361,7 +361,8 @@ class AdminController extends Controller
             abort(403, 'Your account is not activated. Please contact administrator.');
         }
 
-        return view('front.view-profile', compact('user'));
+        $events = EventType::orderBy('event_name', 'ASC')->get();
+        return view('front.view-profile', compact('user', 'events'));
     }
 
     /**

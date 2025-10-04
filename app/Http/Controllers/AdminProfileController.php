@@ -141,7 +141,7 @@ class AdminProfileController extends Controller
             'website' => 'required',
             'map' => 'required',
             'youtube' => 'required',
-            'slug' => 'required|string|unique:profiles,slug',
+            'slug' => 'required|string|unique:profiles,slug,' . $id,
         ]);
 
         if ($validator->fails()) {

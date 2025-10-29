@@ -5,7 +5,7 @@
     @include('front_includes.head')
 
     @yield('page_style')
-    
+
     <style>
         #instagram_icon {
             bottom: 150px;
@@ -47,7 +47,7 @@
             <video width="100%" height="100%" autoplay muted loop playsinline style="background:#000;">
                 <source src="{{ asset('front_assets/images/logo.mp4') }}" type="video/mp4">
                 Your browser does not support the video tag.
-            </video>  
+            </video>
         </div>
 
         <!-- Preloader -->
@@ -143,10 +143,12 @@
     <div class="scroll-to-top scroll-to-target" data-target="html"><span class="icon fa fa-angle-up"></span></div>
 
     <a href="https://wa.me/+91{{ $surat_contact }}" target="_blank" id="whatsapp_icon">
+        <span class="text-white" style="font-size:12px;">Need Help? Chat with us</span>
         <img src="{{asset('front_assets/images/whatsapp.png')}}" alt="whatsapp-img">
     </a>
-    
+
     <a href="{{$instagram}}" target="_blank" id="instagram_icon">
+        <span class="text-white" style="font-size:12px;">More details Follow us...</span>
         <img src="{{asset('front_assets/images/Instagram.png')}}" alt="whatsapp-img">
     </a>
 
@@ -174,7 +176,7 @@
     <script src="{{ asset('front_assets/js/wow.js') }}"></script>
     <script src="{{ asset('front_assets/js/parallax.min.js') }}"></script>
     <script src="{{ asset('front_assets/js/custom-script.js') }}"></script>
-    
+
     <script>
         // window.addEventListener('load', function() {
         //     const loader = document.querySelector('.loader-mask');
@@ -187,10 +189,10 @@
         //         document.body.classList.remove('hidden');
         //     }, 1000); // after transition
         // });
-        
+
         window.addEventListener("load", () => {
-          document.body.classList.remove("loading");
-          document.querySelector(".loader-mask").style.display = "none";
+            document.body.classList.remove("loading");
+            document.querySelector(".loader-mask").style.display = "none";
         });
     </script>
     @yield('page_script')

@@ -115,7 +115,7 @@
 
                     <hr class="my-4">
 
-                    <div id="form-spinner" style="display: none;" class="text-center mt-3">
+                    <div id="form-spinner" style="display: none;" class="text-center mt-1 mb-3">
                         <div class="spinner-border text-primary" role="status">
                             <span class="visually-hidden"></span>
                         </div>
